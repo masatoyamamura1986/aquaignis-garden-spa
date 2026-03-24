@@ -1768,7 +1768,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const nearbyWrap = document.getElementById('nearby-scroll-wrap');
   const nearbyTrack = document.getElementById('nearby-track');
 
-  if (nearbyWrap && nearbyTrack) {
+  if (nearbyWrap && nearbyTrack && window.innerWidth > 767) {
     lenis.on('scroll', () => {
       const rect = nearbyWrap.getBoundingClientRect();
       const wrapH = nearbyWrap.offsetHeight;
