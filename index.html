@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お風呂 — AQUAIGNIS GARDEN SPA</title>
+<link rel="preconnect" href="https://use.typekit.net">
+<script src="https://use.typekit.net/bdk8dze.js"></script>
+<script>try{Typekit.load({async:true});}catch(e){}</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --color-ink: #1a1a1a;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-gray-light: #e5e5e5;
+    --color-gray-bg: #f2f2f2;
+    --color-gray-mid: #cccccc;
+    --color-gray-dark: #4d4d4d;
+    --color-overlay: rgba(0,0,0,0.2);
+    --font-jp: "source-han-serif-jp-subset", serif;
+    --font-en: "cormorant-garamond", serif;
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  /* scroll-behavior is handled by Lenis */
+
+  body {
+    font-family: var(--font-jp);
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: var(--color-ink);
+    background: var(--color-white);
+    line-height: 1.714;
+    font-size: 14px;
+    overflow-x: hidden;
+  }
+
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+
+  /* ===== Shared ===== */
+  .section { margin: 0 1rem; }
+  .section--fullbleed { margin: 0; }
+
+  .en-label {
+    font-family: var(--font-jp);
+    font-size: 12px;
+    font-weight: 400;
+    color: grey;
+    letter-spacing: 0.05em;
+  }
+  .en-label__bracket { color: var(--color-gray-mid); }
+
+  .display-en {
+    font-family: var(--font-en);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    color: var(--color-ink);
+  }
+
+  .vertical-title {
+    writing-mode: vertical-rl;
+    font-family: var(--font-jp);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    line-height: 1.6;
+  }
+
+  .btn-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 32px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-family: var(--font-jp);
+    font-size: 12px;
+    font-weight: 600;
+    background: transparent;
+    color: var(--color-ink);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.4s var(--ease-out-expo);
+  }
+  .btn-pill:hover {
+    background: var(--color-ink);
+    color: var(--color-white);
+  }
+  .btn-pill--white {
+    color: var(--color-white);
+    border-color: var(--color-white);
+  }
+  .btn-pill--white:hover {
+    background: var(--color-white);
+    color: var(--color-ink);
+  }
+
+  .body-text {
+    font-size: 14px;
+    line-height: 2;
+    color: var(--color-gray-dark);
+    max-width: 520px;
+  }
+
+  /* Parallax container */
+  .prlx {
+    overflow: hidden;
+    position: relative;
+  }
+  .prlx img {
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    object-position: center;
+    will-change: transform;
+  }
+
+  /* Fade-in animation */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(0px);
+    transition: opacity 1.2s var(--ease-out-expo), transform 1.2s var(--ease-out-expo), filter 1.2s var(--ease-out-expo);
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+  .fade-in--blur {
+    filter: blur(12px);
+    transform: translateY(0);
+  }
+  .fade-in--blur.visible {
+    filter: blur(0px);
+  }
+  .fade-in--delay1 { transition-delay: 0.15s; }
+  .fade-in--delay2 { transition-delay: 0.3s; }
+  .fade-in--delay3 { transition-delay: 0.45s; }
+
+  /* ===== Header ===== */
+  .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(16px, 2vw, 32px);
+    height: 72px;
+  }
+  .header__logo {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .header__logo-main {
+    font-family: var(--font-en);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--color-ink);
+    line-height: 1;
+  }
+  .header__logo-sub {
+    font-family: var(--font-en);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--color-gray-mid);
+    line-height: 1;
+  }
+
+  /* Menu button (SOLA style) */
+  .header__menu-btn {
+    position: fixed;
+    top: 20px;
+    right: clamp(16px, 2vw, 32px);
+    z-index: 102;
+    height: auto;
+    padding: 6px 14px;
+    border: 1px solid var(--color-ink);
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+    font-family: var(--font-en);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--color-ink);
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+  .header__menu-btn:hover {
+    background: var(--color-ink);
+    color: var(--color-white);
+  }
+  .header__menu-btn.is-open {
+    border-color: var(--color-white);
+    color: var(--color-white);
+    background: transparent;
+  }
+
+  /* Overlay menu */
+  .menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 101;
+    background: var(--color-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s var(--ease-out-expo);
+  }
+  .menu-overlay.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .menu-overlay__nav {
+    list-style: none;
+    text-align: center;
+  }
+  .menu-overlay__nav li {
+    margin-bottom: 32px;
+  }
+  .menu-overlay__nav a {
+    font-family: var(--font-jp);
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--color-white);
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+  }
+  .menu-overlay__nav a:hover {
+    opacity: 0.5;
+  }
+  .menu-overlay__nav-en {
+    display: block;
+    font-family: var(--font-en);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.35);
+    margin-top: 6px;
+  }
+
+  /* Clip reveal */
+  .clip-reveal {
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1.6s var(--ease-out-expo);
+  }
+  .clip-reveal.visible {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* ===== 1. Hero ===== */
+  /* ===== 1. Hero ===== */
+  .hero__catch-section {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1rem;
+  }
+  .hero__catch {
+    font-size: clamp(24px, 3vw, 40px);
+    font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: 0.15em;
+    line-height: 1.8;
+    writing-mode: vertical-rl;
+  }
+  .hero__scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-en);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    color: var(--color-ink);
+  }
+  .hero__scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 60px;
+    background: var(--color-ink);
+    animation: scrollLine 2s var(--ease-out-expo) infinite;
+  }
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  .hero__catch .catch-char {
+    display: inline-block;
+    opacity: 0;
+    filter: blur(8px);
+    transition: opacity 0.6s var(--ease-out-expo), filter 0.6s var(--ease-out-expo);
+  }
+  .hero__catch.is-animated .catch-char {
+    opacity: 1;
+    filter: blur(0px);
+  }
+  .hero__image-section {
+    position: relative;
+    /* height is set dynamically by JS based on char count */
+  }
+  .hero__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+  }
+  .hero__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    clip-path: inset(15% 15% 15% 15% round 12px);
+    will-change: clip-path;
+  }
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--color-black);
+    opacity: 0;
+    z-index: 3;
+    pointer-events: none;
+    will-change: opacity;
+  }
+  .hero__lead {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .hero__lead-text {
+    font-size: clamp(14px, 1.4vw, 18px);
+    line-height: 2.4;
+    letter-spacing: 0.05em;
+    text-align: center;
+    max-width: 600px;
+    padding: 0 24px;
+  }
+  .hero__lead-text .char {
+    color: rgba(255,255,255,0.12);
+    transition: color 0s;
+  }
+  .hero__lead-text .char.lit {
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* ===== 2. Lead ===== */
+  .lead {
+    padding: 120px 0;
+    text-align: center;
+  }
+  .lead__text {
+    font-size: 15px;
+    line-height: 2.4;
+    color: var(--color-gray-dark);
+    max-width: 600px;
+    margin: 0 auto;
+    letter-spacing: 0.03em;
+  }
+
+  /* ===== Split Section (shared by Concept & Detail) ===== */
+  .split {
+    margin: 10rem 1rem 0;
+  }
+  .split + .split {
+    margin-top: 10rem;
+  }
+  .split__title {
+    font-size: 0;
+    height: 48px;
+    border-bottom: 1px solid var(--color-gray-light);
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  .split__title-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+  }
+  .split__main {
+    display: flex;
+    gap: 10px;
+  }
+  .split--reversed .split__main {
+    flex-direction: row-reverse;
+  }
+  .split__image {
+    flex: 0 0 calc(50% - 5px);
+    aspect-ratio: 1;
+    overflow: hidden;
+    position: relative;
+    border-radius: 5px;
+  }
+  .split__image img {
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    object-position: center;
+    will-change: transform;
+  }
+  .split__content {
+    flex: 0 0 calc(50% - 5px);
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* Content inner elements */
+  .split__upper {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+  }
+  /* Display text: left-aligned block */
+  .split__display {
+    font-family: var(--font-en);
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    flex-shrink: 0;
+    padding-right: 24px;
+  }
+  /* Label group: vertical, pushed to far right */
+  .split__label-group {
+    writing-mode: vertical-rl;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-left: auto;
+  }
+  .split__vertical {
+    font-size: clamp(16px, 1.6vw, 22px);
+  }
+  .split__en-label {
+    font-size: 10px;
+    color: grey;
+    letter-spacing: 0.05em;
+  }
+
+  /* Detail (FOUNDATION): display右上, label-group左 */
+  .split--detail .split__display {
+    padding-right: 0;
+    padding-left: 24px;
+    margin-left: auto;
+    order: 2;
+  }
+  .split--detail .split__label-group {
+    margin-left: 0;
+    order: 1;
+  }
+  .split--detail .split__lower {
+    align-self: flex-end;
+    text-align: left;
+  }
+
+  .split__lower {
+    margin-top: auto;
+    padding-top: 32px;
+  }
+  .split__body {
+    font-size: 14px;
+    line-height: 2;
+    color: var(--color-gray-dark);
+    max-width: 420px;
+  }
+  .split__buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* ===== 5. Business (HKT-style) ===== */
+  .business {
+    margin: 10rem 1rem 0;
+  }
+  .business__header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    padding: 60px 2rem;
+    border-top: 1px solid var(--color-gray-light);
+    border-bottom: 1px solid var(--color-gray-light);
+  }
+  .business__heading {
+    flex-shrink: 0;
+  }
+  .business__heading-jp {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+  .business__heading-en {
+    font-family: var(--font-en);
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: var(--color-ink);
+  }
+  .business__intro {
+    padding-top: 8px;
+    font-size: 14px;
+    line-height: 2;
+    color: var(--color-gray-dark);
+  }
+  /* Scroll-driven sticky card section */
+  .business__cards-wrap {
+    position: relative;
+    height: 200vh; /* 2 cards × 100vh each */
+  }
+  .business__bg {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: var(--color-black);
+  }
+  .business__bg-image {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .business__bg-image img {
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    object-position: center;
+    will-change: transform;
+  }
+  .business__bg-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+  }
+  .business__bg-label {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    font-family: var(--font-en);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.4;
+  }
+  .business__counter {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-family: var(--font-en);
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .business__counter-current {
+    color: var(--color-white);
+    transition: all 0.3s ease;
+  }
+  .business__counter-line {
+    width: 32px;
+    height: 1px;
+    background: rgba(255,255,255,0.3);
+  }
+  .business__cards {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+  }
+  /* Image strip: continuous vertical scroll */
+  .business__img-window {
+    width: clamp(280px, 38vw, 540px);
+    height: clamp(280px, 38vw, 540px);
+    overflow: hidden;
+    border-radius: 4px;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .business__img-strip {
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+  }
+  .business__img-strip img {
+    width: clamp(280px, 38vw, 540px);
+    height: clamp(280px, 38vw, 540px);
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  /* Text stack: text fades */
+  .business__text-stack {
+    position: relative;
+    min-width: 260px;
+    min-height: 160px;
+  }
+  .business__card-body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-out-expo);
+    pointer-events: none;
+  }
+  .business__card-body:first-child {
+    position: relative;
+  }
+  .business__card-body.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .business__card-body {
+    padding-top: 4px;
+  }
+  .business__card-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+  .business__card-title {
+    font-size: clamp(20px, 2.5vw, 32px);
+    font-weight: 600;
+    color: var(--color-white);
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .business__card-desc {
+    font-size: 13px;
+    line-height: 2;
+    color: rgba(255,255,255,0.55);
+    max-width: 400px;
+    margin-bottom: 24px;
+  }
+  .business__card-table {
+    width: 100%;
+    max-width: 400px;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+  }
+  .business__card-table tr:first-child th,
+  .business__card-table tr:first-child td {
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .business__card-table th {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    text-align: left;
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    white-space: nowrap;
+    vertical-align: top;
+    width: 100px;
+  }
+  .business__card-table td {
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.55);
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    vertical-align: top;
+  }
+  .business__card-img-sp {
+    display: none;
+  }
+  .business__card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-white);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 4px;
+    transition: border-color 0.3s ease;
+  }
+  .business__card-link:hover {
+    border-color: var(--color-white);
+  }
+  .business__card-link-sub {
+    font-family: var(--font-en);
+    font-size: 10px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.5);
+    margin-left: 8px;
+  }
+
+  /* ===== 6. Amenity ===== */
+  .amenity {
+    margin: 10rem 1rem 0;
+  }
+  .amenity__header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    padding: 60px 2rem;
+    border-top: 1px solid var(--color-gray-light);
+  }
+  .amenity__heading-jp {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+  .amenity__heading-en {
+    font-family: var(--font-en);
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+  .amenity__intro {
+    font-size: 14px;
+    line-height: 2;
+    color: var(--color-gray-dark);
+  }
+  .amenity__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 40px;
+  }
+  .amenity__card {
+    overflow: hidden;
+  }
+  .amenity__card-img {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+  .amenity__card-img img {
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    will-change: transform;
+  }
+  .amenity__card-title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+  }
+  .amenity__card-text {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--color-gray-dark);
+  }
+
+
+  /* ===== 7. Nearby (horizontal scroll) ===== */
+  .nearby {
+    margin: 10rem 1rem 0;
+  }
+  .nearby__header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    padding: 60px 2rem;
+    border-top: 1px solid var(--color-gray-light);
+  }
+  .nearby__heading-jp {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+  .nearby__heading-en {
+    font-family: var(--font-en);
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+  .nearby__intro {
+    font-size: 14px;
+    line-height: 2;
+    color: var(--color-gray-dark);
+  }
+  .nearby__scroll-wrap {
+    position: relative;
+    height: 500vh;
+  }
+  .nearby__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding-left: 0;
+  }
+  .nearby__track {
+    display: flex;
+    gap: 32px;
+    padding-left: 0;
+    padding-right: 100vw;
+    will-change: transform;
+  }
+  .nearby__card {
+    flex: 0 0 clamp(360px, 40vw, 560px);
+    display: flex;
+    flex-direction: column;
+  }
+  .nearby__card-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  .nearby__card-img img {
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    will-change: transform;
+  }
+  .nearby__card-title {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+    color: var(--color-ink);
+  }
+  .nearby__card-desc {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--color-gray-dark);
+    margin-bottom: 16px;
+  }
+  .nearby__card-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .nearby__card-table tr:first-child th,
+  .nearby__card-table tr:first-child td {
+    border-top: 1px solid var(--color-gray-light);
+  }
+  .nearby__card-table th {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-gray-dark);
+    text-align: left;
+    padding: 8px 12px 8px 0;
+    border-bottom: 1px solid var(--color-gray-light);
+    white-space: nowrap;
+    vertical-align: top;
+    width: 80px;
+  }
+  .nearby__card-table td {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--color-gray-dark);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--color-gray-light);
+    vertical-align: top;
+  }
+  .nearby__card-btn {
+    margin-top: 16px;
+  }
+  .nearby__more {
+    text-align: center;
+    padding: 60px 0 0;
+  }
+
+  /* ===== 8. Access (sticky 2-col) ===== */
+  .access-sticky {
+    margin: 10rem 1rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    border-top: 1px solid var(--color-gray-light);
+    padding-top: 60px;
+  }
+  .access-sticky__header {
+    position: sticky;
+    top: 80px;
+    align-self: start;
+    padding: 0 2rem;
+  }
+  .access-sticky__heading-jp {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+  .access-sticky__heading-en {
+    font-family: var(--font-en);
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 32px;
+  }
+  .access-sticky__intro {
+    font-size: 14px;
+    line-height: 2;
+    color: var(--color-gray-dark);
+    max-width: 400px;
+  }
+  .access-sticky__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .access-sticky__card {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .access-sticky__card-img {
+    flex: 0 0 40%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+  .access-sticky__card-content {
+    flex: 1;
+    padding-top: 8px;
+  }
+  .access-sticky__card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s var(--ease-out-expo);
+  }
+  .access-sticky__card:hover .access-sticky__card-img img {
+    transform: scale(1.03);
+  }
+  .access-sticky__card-title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+  }
+  .access-sticky__card-text {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--color-gray-dark);
+  }
+
+  /* ===== 9. Info Table ===== */
+  .info-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .info-table th {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-ink);
+    text-align: left;
+    padding: 16px 24px 16px 0;
+    border-bottom: 1px solid var(--color-gray-light);
+    white-space: nowrap;
+    vertical-align: top;
+    width: 120px;
+  }
+  .info-table td {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--color-gray-dark);
+    padding: 16px 0;
+    border-bottom: 1px solid var(--color-gray-light);
+    vertical-align: top;
+  }
+  .info-table tr:first-child th,
+  .info-table tr:first-child td {
+    border-top: 1px solid var(--color-gray-light);
+  }
+
+  /* ===== Footer ===== */
+  .footer {
+    margin: 10rem 1rem 1rem;
+    color: var(--color-white);
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+  }
+  .footer__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .footer__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1);
+  }
+  .footer__bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+  }
+  .footer__bottom {
+    padding: 1rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+  .footer__catch {
+    font-size: clamp(18px, 2.2vw, 28px);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    line-height: 2;
+    margin-bottom: 60px;
+  }
+  .footer__logo-wrap {
+    margin-bottom: 24px;
+  }
+  .footer__logo-main {
+    font-family: var(--font-en);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--color-white);
+    margin-bottom: 4px;
+  }
+  .footer__logo-sub {
+    font-family: var(--font-en);
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 16px;
+  }
+  .footer__nav {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  .footer__nav a {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .footer__nav a:hover {
+    color: var(--color-white);
+  }
+  .footer__sns {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  .footer__sns a {
+    font-family: var(--font-en);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .footer__sns a:hover { color: var(--color-white); }
+  .footer__copy-bar {
+    font-family: var(--font-en);
+    font-size: 10px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.05em;
+    text-align: center;
+    padding: 20px 1rem;
+    position: relative;
+    z-index: 1;
+  }
+  .footer__totop {
+    font-family: var(--font-en);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s ease;
+  }
+  .footer__totop:hover { color: var(--color-white); }
+  .footer__totop::before {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: currentColor;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 767px) {
+
+    .lead { padding: 80px 20px; }
+    .lead__text { font-size: 13px; }
+
+    .split { margin-top: 5rem; }
+    .split + .split { margin-top: 5rem; }
+    .split__title { display: none; }
+    .split__main { flex-direction: column !important; }
+    .split__image { flex: none; aspect-ratio: 1; }
+    .split__content { flex: none; padding: 24px 0; }
+    .split__vertical { writing-mode: horizontal-tb; font-size: 18px; }
+    .split__upper { flex-direction: column !important; gap: 16px; align-items: flex-start; }
+    .split__display { order: 1; }
+    .split__label-group { order: 2; writing-mode: horizontal-tb; gap: 0; padding: 0; margin-left: 0; }
+    .split--detail .split__display { order: 1; margin-left: 0; padding-left: 0; }
+    .split--detail .split__label-group { order: 2; }
+
+    .business, .amenity, .nearby, .access-sticky { margin-top: 5rem; }
+    .footer { margin-top: 5rem; }
+
+    .business__header { grid-template-columns: 1fr; gap: 24px; padding: 32px 0; }
+    .business__cards-wrap { height: auto !important; }
+    .business__bg { position: relative; height: auto; padding: 40px 0; }
+    .business__cards {
+      position: relative;
+      flex-direction: column;
+      gap: 48px;
+      padding: 24px;
+    }
+    .business__img-window { display: none; }
+    .business__text-stack { min-height: auto; }
+    .business__card-body {
+      position: relative !important;
+      opacity: 1 !important;
+      display: block;
+    }
+    .business__card-body + .business__card-body {
+      margin-top: 48px;
+    }
+    .business__card-img-sp {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border-radius: 4px;
+      margin-bottom: 16px;
+    }
+    .business__card-img-sp img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .business__counter { display: none; }
+    .business__bg-label { display: none; }
+    .business__card { flex: 0 0 260px; }
+    .business__card-img { width: 140px; height: 140px; }
+
+    .amenity__header { grid-template-columns: 1fr; gap: 24px; padding: 32px 0; }
+    .amenity__grid { grid-template-columns: 1fr !important; gap: 24px; }
+
+    .nearby__header { grid-template-columns: 1fr; gap: 24px; padding: 32px 0; }
+    .nearby__card { flex: 0 0 85vw; }
+
+    .access-sticky { grid-template-columns: 1fr; gap: 24px; }
+    .info-table th {
+      white-space: normal;
+      width: 80px;
+      padding: 12px 12px 12px 0;
+      font-size: 12px;
+    }
+    .info-table td {
+      font-size: 12px;
+      word-break: break-all;
+    }
+    .access-sticky__header { position: static; padding: 0; }
+
+    .footer__bottom { flex-direction: column; align-items: center; }
+    .footer__nav { flex-direction: column; gap: 12px; align-items: center; }
+    .footer__logo-wrap { text-align: center; }
+    .footer__copy-bar { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 1. Hero -->
+<!-- Header -->
+<header class="header">
+  <a href="#" class="header__logo">
+    <span class="header__logo-main">AQUAIGNIS GARDEN SPA</span>
+    <span class="header__logo-sub">KARUIZAWA</span>
+  </a>
+</header>
+
+<!-- Menu button (fixed) -->
+<button class="header__menu-btn" id="menu-btn">MENU</button>
+
+<!-- Menu overlay -->
+<div class="menu-overlay" id="menu-overlay">
+  <ul class="menu-overlay__nav">
+    <li><a href="#concept">コンセプト<span class="menu-overlay__nav-en">CONCEPT</span></a></li>
+    <li><a href="#facility">施設と特長<span class="menu-overlay__nav-en">FACILITY</span></a></li>
+    <li><a href="#amenity">アメニティ<span class="menu-overlay__nav-en">AMENITY</span></a></li>
+    <li><a href="#nearby">周辺施設<span class="menu-overlay__nav-en">NEARBY</span></a></li>
+    <li><a href="#access">アクセス<span class="menu-overlay__nav-en">ACCESS</span></a></li>
+    <li><a href="#info">基本情報<span class="menu-overlay__nav-en">INFORMATION</span></a></li>
+  </ul>
+</div>
+
+<!-- 1a. Catch -->
+<div class="hero__catch-section">
+  <div class="hero__catch" data-catch="湯と、森と、静寂と。|軽井沢で出会う、|ととのいの時間。"></div>
+  <div class="hero__scroll-hint">SCROLL DOWN</div>
+</div>
+
+<!-- 1b. Image (sticky + clip-path + overlay) -->
+<section class="hero__image-section">
+  <div class="hero__sticky">
+    <div class="hero__bg">
+      <img src="images/ags-06.webp" alt="AQUAIGNIS GARDEN SPA 露天風呂">
+    </div>
+    <div class="hero__overlay"></div>
+    <div class="hero__lead">
+      <div class="hero__lead-text"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 3. Concept (FACILITY GUIDE layout: text left / image right) -->
+<section class="split split--reversed" id="concept">
+  <div class="split__title">
+    <h2 class="split__title-text">コンセプト</h2>
+  </div>
+  <div class="split__main">
+    <div class="split__image">
+      <img src="images/ags-04.webp" alt="温浴施設コンセプト">
+    </div>
+    <div class="split__content fade-in">
+      <div class="split__upper">
+        <div class="split__display">CONCEPT</div>
+        <div class="split__label-group">
+          <div class="split__vertical vertical-title">アクアイグニスで<br>過ごす温浴のひととき</div>
+        </div>
+      </div>
+      <div class="split__lower">
+        <div class="split__body fade-in fade-in--delay1">
+          HACIENDA KARUIZAWAにご宿泊のお客様は、隣接する温浴施設「AQUAIGNIS GARDEN SPA」をご利用いただけます。開放感のある露天風呂や内湯、心地よい発汗を促すサウナ、そして外気浴やラウンジまで備えた温浴空間。軽井沢の澄んだ空気に包まれながら、旅の緊張をゆるめ、心身を整えるひとときをお過ごしください。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Detail (FOUNDATION layout: image left / text right) -->
+<section class="split split--detail">
+  <div class="split__title">
+    <h2 class="split__title-text">ご利用方法</h2>
+  </div>
+  <div class="split__main">
+    <div class="split__image">
+      <img src="images/ags-02.webp" alt="サウナ">
+    </div>
+    <div class="split__content fade-in">
+      <div class="split__upper">
+        <div class="split__label-group">
+          <div class="split__vertical vertical-title">薪の爆ぜる音に、からだを委ねる。<br>温と冷が織りなす、至極のととのい体験。</div>
+        </div>
+        <div class="split__display">DETAIL</div>
+      </div>
+      <div class="split__lower">
+        <div class="split__body fade-in fade-in--delay1">
+          当施設では、男女ともに趣の異なる二つのサウナをご用意いたしました。なかでも、揺らめく炎を眺めながら木の爆ぜる音に耳を傾ける「薪サウナ」は、古来より続く原始的な癒やしを現代のラグジュアリーへと昇華させた特別な空間です。温冷交代浴の極致を追求し、温度帯の異なる多様な水風呂を完備。火照った身体を優しく包み込む「冷冷交代浴」という贅沢な選択肢が、あなたを未だかつてない深い休息へと誘います。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Business (HKT-style) -->
+<section class="business" id="facility">
+  <div class="business__header fade-in">
+    <div class="business__heading">
+      <div class="business__heading-jp">施設と特長</div>
+      <div class="business__heading-en">FACILITY AND<br>OUR FEATURES</div>
+    </div>
+    <div class="business__intro fade-in fade-in--delay1">
+      <p>AQUAIGNIS GARDEN SPAでは、露天風呂、内湯、サウナ、外気浴、ラウンジなど多彩な温浴体験をご用意。<br>軽井沢の四季を感じながら、心身を整える特別な時間をお過ごしいただけます。</p>
+    </div>
+  </div>
+  <div class="business__cards-wrap">
+    <div class="business__bg">
+      <div class="business__bg-image"><img src="images/ags-07.webp" alt=""></div>
+      <div class="business__bg-label">FACILITY AND<br>OUR FEATURES</div>
+      <div class="business__counter">
+        <span class="business__counter-current">01</span>
+        <span class="business__counter-line"></span>
+        <span>02</span>
+      </div>
+      <div class="business__cards">
+        <div class="business__img-window">
+          <div class="business__img-strip">
+            <img src="images/ags-04.webp" alt="内湯">
+            <img src="images/ags-05.webp" alt="外湯">
+          </div>
+        </div>
+        <div class="business__text-stack">
+          <div class="business__card-body is-active" data-index="0">
+            <div class="business__card-img-sp"><img src="images/ags-04.webp" alt="内湯"></div>
+            <div class="business__card-title">内湯</div>
+            <div class="business__card-desc">古来より親しまれてきたヨモギのほか、香り豊かな温州ミカンの果皮やビワの葉などを使用。</div>
+            <table class="business__card-table">
+              <tr><th>原材料</th><td>ヨモギ、ビワの葉、チンピ、柿の葉</td></tr>
+              <tr><th>お湯の特徴</th><td>ヨモギ湯は血行を促進させるため、肩こりや腰痛、神経痛などをやわらげる働きがあります。また、豊富に含まれる精油成分には、すり傷、切り傷の止血や殺菌にも効果的で、よもぎの香りはストレス解消や安眠にも良いと言われています。</td></tr>
+            </table>
+          </div>
+          <div class="business__card-body" data-index="1">
+            <div class="business__card-img-sp"><img src="images/ags-05.webp" alt="外湯"></div>
+            <div class="business__card-title">外湯</div>
+            <div class="business__card-desc">古来より肌を優しく潤わすコメヌカのほか、和の爽やかな香りを感じるショウガなどを使用。</div>
+            <table class="business__card-table">
+              <tr><th>原材料</th><td>コメヌカ、ショウガ、ヨモギ、ドクダミ</td></tr>
+              <tr><th>お湯の特徴</th><td>コメヌカにはビタミンBが豊富に含まれ新陳代謝をよくする働きがあり、美肌、肌荒れ予防、シミ・しわの予防、対策の効能が期待されます。また、ショウガの持つ血行促進作用がやさしく働き、冷え性や消化促進などにも良いと言われています。</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Amenity -->
+<section class="amenity" id="amenity">
+  <div class="amenity__header fade-in">
+    <div>
+      <div class="amenity__heading-jp">アメニティ</div>
+      <div class="amenity__heading-en">AMENITY &<br>SERVICES</div>
+    </div>
+    <div class="amenity__intro fade-in fade-in--delay1">
+      <p>ご滞在をより快適にお過ごしいただくために、厳選したアメニティをご用意しております。<br>手ぶらでお越しいただいても、ゆったりと温浴をお楽しみいただけます。</p>
+    </div>
+  </div>
+  <div class="amenity__grid">
+    <div class="amenity__card fade-in">
+      <div class="amenity__card-img">
+        <img src="images/ags-03.webp" alt="タオル・バスローブ">
+      </div>
+      <div class="amenity__card-title">タオル・バスローブ</div>
+      <div class="amenity__card-text">上質なバスタオル・フェイスタオル・バスローブを全てのお客様にご用意。肌触りにこだわったオリジナル仕様です。</div>
+    </div>
+    <div class="amenity__card fade-in fade-in--delay1">
+      <div class="amenity__card-img">
+        <img src="images/ags-03.webp" alt="スキンケア">
+      </div>
+      <div class="amenity__card-title">スキンケア・ヘアケア</div>
+      <div class="amenity__card-text">シャンプー、コンディショナー、ボディソープ、化粧水、乳液など、こだわりのブランドアメニティを取り揃えています。</div>
+    </div>
+    <div class="amenity__card fade-in fade-in--delay2">
+      <div class="amenity__card-img">
+        <img src="images/ags-03.webp" alt="ドリンクサービス">
+      </div>
+      <div class="amenity__card-title">ドリンクサービス</div>
+      <div class="amenity__card-text">湯上がりのひとときに、ラウンジにてウォーターサーバーやハーブティーなどのフリードリンクをお楽しみいただけます。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Nearby Facilities (horizontal scroll) -->
+<section class="nearby" id="nearby">
+  <div class="nearby__header fade-in">
+    <div>
+      <div class="nearby__heading-jp">周辺施設紹介</div>
+      <div class="nearby__heading-en">NEARBY<br>FACILITIES</div>
+    </div>
+    <div class="nearby__intro fade-in fade-in--delay1">
+      <p>AQUAIGNIS GARDEN SPAの周辺には、カフェやレストラン、ショップなど魅力的な施設が揃っています。<br>温浴の前後に、軽井沢ならではの食や体験をお楽しみください。</p>
+    </div>
+  </div>
+  <div class="nearby__scroll-wrap" id="nearby-scroll-wrap">
+    <div class="nearby__sticky">
+      <div class="nearby__track" id="nearby-track">
+        <div class="nearby__card">
+          <div class="nearby__card-img"><img src="images/nearby-lounge.webp" alt="SHARE LOUNGE"></div>
+          <div class="nearby__card-title">SHARE LOUNGE 軽井沢 T-SITE</div>
+          <div class="nearby__card-desc">駅直結のラウンジ、カフェ・バー・ワークスペースとして使え、温浴後の休息にも対応。</div>
+          <table class="nearby__card-table">
+            <tr><th>電話番号</th><td>0267-41-6929</td></tr>
+            <tr><th>営業時間</th><td>09:00〜22:00</td></tr>
+          </table>
+          <div class="nearby__card-btn"><a href="https://store.tsite.jp/karuizawa/floor/shop/sharelounge/" class="btn-pill" target="_blank">詳しくはこちら</a></div>
+        </div>
+        <div class="nearby__card">
+          <div class="nearby__card-img"><img src="images/nearby-hacienda.webp" alt="HACIENDA KARUIZAWA"></div>
+          <div class="nearby__card-title">HACIENDA KARUIZAWA</div>
+          <div class="nearby__card-desc">ザ・コンランショップが監修した全9室のホテル。客室ごとに異なる設えで上質な滞在を提供。</div>
+          <table class="nearby__card-table">
+            <tr><th>電話番号</th><td>0267-31-6460</td></tr>
+            <tr><th>チェックイン</th><td>IN 15:00 / OUT 11:00</td></tr>
+          </table>
+          <div class="nearby__card-btn"><a href="https://hacienda-karuizawa.jp" class="btn-pill" target="_blank">詳しくはこちら</a></div>
+        </div>
+        <div class="nearby__card">
+          <div class="nearby__card-img"><img src="images/nearby-kasaan.webp" alt="笠庵 賛否両論"></div>
+          <div class="nearby__card-title">笠庵 賛否両論</div>
+          <div class="nearby__card-desc">笠原将弘氏が手がける日本料理店。信州食材を使ったコースを楽しめる。</div>
+          <table class="nearby__card-table">
+            <tr><th>電話番号</th><td>0267-41-6899</td></tr>
+            <tr><th>営業時間</th><td>11:00〜14:30 / 16:30〜21:00</td></tr>
+          </table>
+          <div class="nearby__card-btn"><a href="https://store.tsite.jp/karuizawa/floor/shop/kasaan/" class="btn-pill" target="_blank">詳しくはこちら</a></div>
+        </div>
+        <div class="nearby__card">
+          <div class="nearby__card-img"><img src="images/nearby-chocolat.webp" alt="LE CHOCOLAT DE H"></div>
+          <div class="nearby__card-title">LE CHOCOLAT DE H</div>
+          <div class="nearby__card-desc">辻口博啓氏によるショコラトリー。ショコラ、焼き菓子、カフェ利用まで楽しめる。</div>
+          <table class="nearby__card-table">
+            <tr><th>電話番号</th><td>0267-48-6111</td></tr>
+            <tr><th>営業時間</th><td>10:00〜19:00</td></tr>
+          </table>
+          <div class="nearby__card-btn"><a href="https://store.tsite.jp/karuizawa/floor/shop/lechocolatdeh/" class="btn-pill" target="_blank">詳しくはこちら</a></div>
+        </div>
+        <div class="nearby__card">
+          <div class="nearby__card-img"><img src="images/nearby-okume.webp" alt="だし尾粂"></div>
+          <div class="nearby__card-title">だし尾粂</div>
+          <div class="nearby__card-desc">無添加だし専門店。オーダーメイドだしパック体験も可能。</div>
+          <table class="nearby__card-table">
+            <tr><th>電話番号</th><td>0267-48-6170</td></tr>
+            <tr><th>営業時間</th><td>09:00〜21:00</td></tr>
+          </table>
+          <div class="nearby__card-btn"><a href="https://store.tsite.jp/karuizawa/floor/shop/okume/" class="btn-pill" target="_blank">詳しくはこちら</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nearby__more">
+    <a href="https://store.tsite.jp/karuizawa/floor/" class="btn-pill" target="_blank" style="padding: 16px 48px; font-size: 14px;">その他 施設はこちら</a>
+  </div>
+</section>
+
+<!-- 8. Access (amenity style, 4-col) -->
+<section class="amenity" id="access">
+  <div class="amenity__header fade-in">
+    <div>
+      <div class="amenity__heading-jp">温浴施設への道順</div>
+      <div class="amenity__heading-en">ACCESS TO<br>THE SPA</div>
+    </div>
+    <div class="amenity__intro fade-in fade-in--delay1">
+      <p>HACIENDA KARUIZAWAからAQUAIGNIS GARDEN SPAまでは徒歩約2分。<br>屋外のご移動となりますが、雨天時には傘の貸し出しをご用意しております。</p>
+    </div>
+  </div>
+  <div class="amenity__grid" style="grid-template-columns: repeat(4, 1fr);">
+    <div class="amenity__card fade-in">
+      <div class="amenity__card-img">
+        <img src="images/map-item-1.webp" alt="ステップ1">
+      </div>
+      <div class="amenity__card-title">01 — 出口を右へ</div>
+      <div class="amenity__card-text">ホテルの出口を出て右へお進みください。</div>
+    </div>
+    <div class="amenity__card fade-in fade-in--delay1">
+      <div class="amenity__card-img">
+        <img src="images/map-item-2.webp" alt="ステップ2">
+      </div>
+      <div class="amenity__card-title">02 — 階段を下りる</div>
+      <div class="amenity__card-text">階段を下りていただきます。</div>
+    </div>
+    <div class="amenity__card fade-in fade-in--delay2">
+      <div class="amenity__card-img">
+        <img src="images/map-item-3.webp" alt="ステップ3">
+      </div>
+      <div class="amenity__card-title">03 — 直進</div>
+      <div class="amenity__card-text">軽井沢T-SITE内をそのまま直進してください。</div>
+    </div>
+    <div class="amenity__card fade-in fade-in--delay3">
+      <div class="amenity__card-img">
+        <img src="images/map-item-4.webp" alt="ステップ4">
+      </div>
+      <div class="amenity__card-title">04 — 到着</div>
+      <div class="amenity__card-text">正面の大きな建物がAQUAIGNIS GARDEN SPAです。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. Basic Info (sticky 2-col, same as Access) -->
+<section class="access-sticky" id="info">
+  <div class="access-sticky__header fade-in">
+    <div class="access-sticky__heading-jp">基本情報</div>
+    <div class="access-sticky__heading-en">BASIC<br>INFORMATION</div>
+    <div class="access-sticky__intro">
+      <p>AQUAIGNIS GARDEN SPAのご利用に関する基本情報です。<br>お越しの際にご確認ください。</p>
+    </div>
+  </div>
+  <div class="access-sticky__cards">
+    <table class="info-table fade-in">
+      <tr><th>施設名</th><td>AQUAIGNIS GARDEN SPA</td></tr>
+      <tr><th>住所</th><td>長野県北佐久郡軽井沢町軽井沢中谷地 1178-1293（軽井沢 T-SITE 内）</td></tr>
+      <tr><th>電話番号</th><td>0267-46-8003</td></tr>
+      <tr><th>営業時間</th><td>3/17〜4/24：8:00-22:00（最終入館 21:00）<br>4/25〜：6:00-23:00（最終入館 22:00）</td></tr>
+      <tr><th>入浴料金</th><td>入浴料金：1300円（土日祝含む）</td></tr>
+      <tr><th>アクセス</th><td>JR 北陸新幹線・しなの鉄道「軽井沢」駅徒歩1分／駅直結連絡線を訴求</td></tr>
+      <tr><th>マナー</th><td>・衛生を保つため浴槽での入浴をご遠慮いただいております。<br>・お子様にはベビーバスをご用意しておりますので、シャワーからのお湯を利用してご入浴いただけます。</td></tr>
+      <tr><th>注意事項</th><td>・お子様の混浴は120cm以下もしくは7歳未満までとさせていただきます。<br>・サウナの利用は、中学生以上とさせていただきます。<br>・反社会的勢力並びにその関係者とみなされる方、入れ墨（タトゥー）及び、泥酔の方はご入館を固くお断りいたします。</td></tr>
+      <tr><th>Instagram</th><td><a href="https://www.instagram.com/aquaignisgardensp_karuizawa/" target="_blank" style="color:var(--color-ink); text-decoration:underline; text-underline-offset:3px;">https://www.instagram.com/aquaignisgardenspa_karuizawa/</a></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer__bg"><img src="images/ags-06.webp" alt=""></div>
+  <div class="footer__bottom">
+    <div class="footer__catch">湯と、森と、静寂と。<br>軽井沢で出会う、<br>ととのいの時間。</div>
+    <div class="footer__logo-wrap">
+      <div class="footer__logo-main">AQUAIGNIS GARDEN SPA</div>
+      <div class="footer__logo-sub">KARUIZAWA</div>
+    </div>
+    <ul class="footer__nav">
+      <li><a href="#concept">コンセプト</a></li>
+      <li><a href="#facility">施設と特長</a></li>
+      <li><a href="#amenity">アメニティ</a></li>
+      <li><a href="#nearby">周辺施設</a></li>
+      <li><a href="#access">アクセス</a></li>
+      <li><a href="#info">基本情報</a></li>
+    </ul>
+    <div class="footer__sns">
+      <a href="https://www.instagram.com/aquaignisgardenspa_karuizawa/" target="_blank" aria-label="Instagram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer__copy-bar">
+    &copy; AQUAIGNIS GARDEN SPA All Rights Reserved.
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Lenis smooth scroll
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+  // Hero catch: 1文字ずつ登場
+  const catchEl = document.querySelector('.hero__catch');
+  if (catchEl) {
+    const catchLines = catchEl.dataset.catch.split('|');
+    catchLines.forEach((line, li) => {
+      line.split('').forEach((ch, ci) => {
+        const span = document.createElement('span');
+        span.className = 'catch-char';
+        span.textContent = ch;
+        catchEl.appendChild(span);
+      });
+      if (li < catchLines.length - 1) {
+        catchEl.appendChild(document.createElement('br'));
+      }
+    });
+    // Count total chars for staggered delay
+    const catchChars = catchEl.querySelectorAll('.catch-char');
+    const charDelay = 50; // ms per char
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          catchChars.forEach((ch, i) => {
+            ch.style.transitionDelay = (i * charDelay) + 'ms';
+          });
+          catchEl.classList.add('is-animated');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    observer.observe(catchEl);
+  }
+
+  // Hero lead text: wrap each char in span (safe DOM method)
+  const isSP = window.innerWidth <= 767;
+  const leadLinesPC = [
+    '湯気に包まれながら、からだの緊張がほどけ、',
+    '思考が、静かにゆるんでいく。',
+    'ここにあるのは、ただ汗を流すための場所ではなく、',
+    '旅の途中で自分に戻るための時間。',
+    '軽井沢の空気とともに、心とからだを整えてください。'
+  ];
+  const leadLinesSP = [
+    '湯気に包まれながら、',
+    'からだの緊張がほどけ、',
+    '思考が、静かにゆるんでいく。',
+    'ここにあるのは、',
+    'ただ汗を流すための場所ではなく、',
+    '旅の途中で自分に戻るための時間。',
+    '軽井沢の空気とともに、',
+    '心とからだを整えてください。'
+  ];
+  const leadLines = isSP ? leadLinesSP : leadLinesPC;
+  const leadTextEl = document.querySelector('.hero__lead-text');
+  if (leadTextEl) {
+    leadLines.forEach((line, li) => {
+      line.split('').forEach(ch => {
+        const span = document.createElement('span');
+        span.className = 'char';
+        span.textContent = ch;
+        leadTextEl.appendChild(span);
+      });
+      if (li < leadLines.length - 1) {
+        leadTextEl.appendChild(document.createElement('br'));
+      }
+    });
+  }
+  const leadChars = document.querySelectorAll('.hero__lead-text .char');
+  const heroLead = document.querySelector('.hero__lead');
+
+  // Hero image: clip-path expand + hold + overlay + text
+  const heroImageSection = document.querySelector('.hero__image-section');
+  const heroImg = document.querySelector('.hero__bg img');
+  const heroOverlay = document.querySelector('.hero__overlay');
+  const vh = window.innerHeight;
+
+  // Dynamic height: 3vh fixed phases + text phase based on char count
+  // Phase 1: expand (1vh), Phase 2: hold (1vh), Phase 3: overlay (1vh), Phase 4: text (PX_PER_CHAR * chars)
+  const PX_PER_CHAR = 12;
+  const fixedPhases = vh * 3; // 3 x 100vh
+  const textScroll = Math.max(vh * 3, leadChars.length * PX_PER_CHAR);
+  const totalHeight = fixedPhases + textScroll + vh; // + 1vh buffer
+  if (heroImageSection) {
+    heroImageSection.style.height = totalHeight + 'px';
+  }
+
+  if (heroImageSection && heroImg) {
+    lenis.on('scroll', () => {
+      const scrolled = -heroImageSection.getBoundingClientRect().top;
+
+      // Phase 1 (0-100vh): clip-path expands
+      const expandProgress = Math.max(0, Math.min(1, scrolled / vh));
+      const inset = 15 * (1 - expandProgress);
+      const radius = 12 * (1 - expandProgress);
+      heroImg.style.clipPath = 'inset(' + inset + '% ' + inset + '% ' + inset + '% ' + inset + '% round ' + radius + 'px)';
+
+      // Phase 3 (200vh-300vh): overlay fades in
+      const overlayProgress = Math.max(0, Math.min(1, (scrolled - vh * 2) / vh));
+      heroOverlay.style.opacity = overlayProgress * 0.6;
+
+      // Show lead text (after overlay starts)
+      if (heroLead) {
+        heroLead.style.opacity = overlayProgress > 0.3 ? 1 : 0;
+      }
+
+      // Phase 4: chars light up (dynamically calculated)
+      if (leadChars.length > 0) {
+        const charProgress = Math.max(0, Math.min(1, (scrolled - vh * 3) / textScroll));
+        const litCount = Math.floor(charProgress * leadChars.length);
+        leadChars.forEach(function(ch, i) {
+          ch.classList.toggle('lit', i < litCount);
+        });
+      }
+    });
+  }
+
+  // Business cards: scroll-driven sticky slider (HKT-style)
+  const cardsWrap = document.querySelector('.business__cards-wrap');
+  const imgStrip = document.querySelector('.business__img-strip');
+  const imgWindow = document.querySelector('.business__img-window');
+  const stackTexts = document.querySelectorAll('.business__text-stack .business__card-body');
+  const counterCurrent = document.querySelector('.business__counter-current');
+  const totalCards = stackTexts.length;
+
+  if (cardsWrap && imgStrip && totalCards > 0) {
+    let lastIndex = -1;
+    lenis.on('scroll', () => {
+      const rect = cardsWrap.getBoundingClientRect();
+      const wrapHeight = cardsWrap.offsetHeight;
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(1, scrolled / (wrapHeight - window.innerHeight)));
+
+      // Smooth continuous translateY for image strip
+      const imgSize = imgWindow.offsetHeight;
+      const maxTranslate = imgSize * (totalCards - 1);
+      const translateY = -(progress * maxTranslate);
+      imgStrip.style.transform = `translateY(${translateY}px)`;
+
+      // Text: sync with image position (round = switch when image is half visible)
+      const currentImgPosition = progress * (totalCards - 1);
+      const activeIndex = Math.min(totalCards - 1, Math.round(currentImgPosition));
+      if (activeIndex !== lastIndex) {
+        stackTexts.forEach((text, i) => {
+          text.classList.toggle('is-active', i === activeIndex);
+        });
+        if (counterCurrent) {
+          counterCurrent.textContent = String(activeIndex + 1).padStart(2, '0');
+        }
+        lastIndex = activeIndex;
+      }
+    });
+  }
+
+  // Nearby facilities: horizontal scroll driven by vertical scroll
+  const nearbyWrap = document.getElementById('nearby-scroll-wrap');
+  const nearbyTrack = document.getElementById('nearby-track');
+
+  if (nearbyWrap && nearbyTrack) {
+    lenis.on('scroll', () => {
+      const rect = nearbyWrap.getBoundingClientRect();
+      const wrapH = nearbyWrap.offsetHeight;
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(1, scrolled / (wrapH - window.innerHeight)));
+
+      const lastCard = nearbyTrack.lastElementChild;
+      const trackEnd = lastCard.offsetLeft + lastCard.offsetWidth + 32 - window.innerWidth + 16;
+      const tx = -(progress * Math.max(0, trackEnd));
+      nearbyTrack.style.transform = 'translateX(' + tx + 'px)';
+    });
+  }
+
+  // Menu toggle
+  const menuBtn = document.getElementById('menu-btn');
+  const menuOverlay = document.getElementById('menu-overlay');
+  if (menuBtn && menuOverlay) {
+    menuBtn.addEventListener('click', () => {
+      const isOpen = menuBtn.classList.toggle('is-open');
+      menuOverlay.classList.toggle('is-open', isOpen);
+      menuBtn.textContent = isOpen ? 'CLOSE' : 'MENU';
+      if (isOpen) {
+        lenis.stop();
+      } else {
+        lenis.start();
+      }
+    });
+    menuOverlay.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        menuBtn.classList.remove('is-open');
+        menuOverlay.classList.remove('is-open');
+        menuBtn.textContent = 'MENU';
+        lenis.start();
+        if (target) {
+          setTimeout(() => { lenis.scrollTo(target, { offset: -80 }); }, 100);
+        }
+      });
+    });
+  }
+
+  // Back to top
+  const totop = document.getElementById('totop');
+  if (totop) {
+    totop.addEventListener('click', (e) => {
+      e.preventDefault();
+      lenis.scrollTo(0);
+    });
+  }
+
+  // Parallax: all images with height 120% shift on scroll
+  const prlxContainers = document.querySelectorAll('.split__image, .amenity__card-img, .nearby__card-img, .business__bg-image');
+  lenis.on('scroll', () => {
+    prlxContainers.forEach(container => {
+      const img = container.querySelector('img');
+      if (!img) return;
+      const rect = container.getBoundingClientRect();
+      const vh = window.innerHeight;
+      if (rect.bottom < 0 || rect.top > vh) return;
+      const progress = (vh - rect.top) / (vh + rect.height);
+      const shift = (progress - 0.5) * -20;
+      img.style.transform = 'translateY(' + shift + '%)';
+    });
+  });
+
+  // IntersectionObserver for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -20px 0px'
+  });
+
+  document.querySelectorAll('.fade-in, .clip-reveal').forEach(el => {
+    // Elements already in viewport on load
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      el.classList.add('visible');
+    } else {
+      observer.observe(el);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
