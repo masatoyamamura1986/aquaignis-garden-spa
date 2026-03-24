@@ -1210,7 +1210,20 @@
     .amenity__grid { grid-template-columns: 1fr !important; gap: 24px; }
 
     .nearby__header { grid-template-columns: 1fr; gap: 24px; padding: 32px 0; }
-    .nearby__card { flex: 0 0 85vw; }
+    .nearby__scroll-wrap { height: auto; }
+    .nearby__sticky {
+      position: relative;
+      height: auto;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+      padding-left: 1rem;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .nearby__sticky::-webkit-scrollbar { display: none; }
+    .nearby__track { padding-right: 1rem; }
+    .nearby__card { flex: 0 0 80vw; scroll-snap-align: start; }
 
     .access-sticky { grid-template-columns: 1fr; gap: 24px; }
     .info-table th {
