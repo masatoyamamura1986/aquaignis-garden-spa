@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parts Library | AQUAIGNIS GARDEN SPA</title>
+<link rel="preconnect" href="https://use.typekit.net">
+<script src="https://use.typekit.net/bdk8dze.js"></script>
+<script>try{Typekit.load({async:true});}catch(e){}</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --color-ink: #1a1a1a;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-gray-light: #e5e5e5;
+    --color-gray-bg: #f2f2f2;
+    --color-gray-mid: #cccccc;
+    --color-gray-dark: #4d4d4d;
+    --font-jp: "source-han-serif-jp-subset", serif;
+    --font-en: "cormorant-garamond", serif;
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  body {
+    font-family: var(--font-jp);
+    font-feature-settings: "palt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: var(--color-ink);
+    background: var(--color-white);
+    line-height: 1.714;
+    font-size: 14px;
+    overflow-x: hidden;
+  }
+
+  img { display: block; max-width: 100%; }
+
+  .vertical-title {
+    writing-mode: vertical-rl;
+    font-family: var(--font-jp);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    line-height: 1.6;
+  }
+
+  /* Parts header */
+  .parts-header {
+    padding: 40px 1rem;
+    border-bottom: 1px solid var(--color-gray-light);
+    margin-bottom: 60px;
+  }
+  .parts-header__title {
+    font-family: var(--font-en);
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    margin-bottom: 4px;
+  }
+  .parts-header__sub {
+    font-size: 12px;
+    color: var(--color-gray-mid);
+  }
+
+  /* Part block */
+  .part {
+    margin: 0 0 80px;
+  }
+  .part__label {
+    font-family: var(--font-en);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--color-gray-mid);
+    text-transform: uppercase;
+    margin: 0 1rem 4px;
+  }
+  .part__name {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 1rem 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-gray-light);
+  }
+
+  /* ===== Split Slider ===== */
+  .split-slider {
+    margin: 0 1rem;
+  }
+  .split-slider__title {
+    font-size: 0;
+    height: 48px;
+    border-bottom: 1px solid var(--color-gray-light);
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  .split-slider__title-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+  }
+
+  /* Scroll spacer */
+  .split-slider__scroll {
+    position: relative;
+    /* height set by JS */
+  }
+
+  /* Sticky frame: 50/50 layout pinned to viewport */
+  .split-slider__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    gap: 10px;
+    padding: 1rem 0;
+  }
+  .split-slider--reversed .split-slider__sticky {
+    flex-direction: row-reverse;
+  }
+
+  /* Left: image window with vertical strip */
+  .split-slider__img-side {
+    flex: 0 0 calc(50% - 5px);
+    overflow: hidden;
+    border-radius: 5px;
+    position: relative;
+  }
+  .split-slider__img-strip {
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+  }
+  .split-slider__img-strip img {
+    width: 100%;
+    height: calc(100vh - 2rem);
+    object-fit: cover;
+    object-position: center;
+    flex-shrink: 0;
+  }
+
+  /* Right: text with fade */
+  .split-slider__text-side {
+    flex: 0 0 calc(50% - 5px);
+    position: relative;
+  }
+  .split-slider__panel {
+    position: absolute;
+    inset: 0;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    opacity: 0;
+    transition: opacity 0.5s var(--ease-out-expo);
+    pointer-events: none;
+  }
+  .split-slider__panel.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Text elements */
+  .split-slider__upper {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .split-slider__display {
+    font-family: var(--font-en);
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    flex-shrink: 0;
+    padding-right: 24px;
+  }
+  .split-slider__label-group {
+    writing-mode: vertical-rl;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-left: auto;
+  }
+  .split-slider__vertical {
+    font-size: clamp(16px, 1.6vw, 22px);
+  }
+  .split-slider__lower {
+    margin-top: auto;
+    padding-top: 32px;
+  }
+  .split-slider__body {
+    font-size: 14px;
+    line-height: 2;
+    color: var(--color-gray-dark);
+    max-width: 420px;
+  }
+
+
+  /* ===== Hero clip-path + text reveal ===== */
+  .hero__image-section {
+    position: relative;
+  }
+  .hero__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .hero__bg-clip {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(15% 15% 15% 15% round 12px);
+    will-change: clip-path;
+    overflow: hidden;
+  }
+  .hero__bg-clip > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--color-black);
+    opacity: 0;
+    z-index: 3;
+    pointer-events: none;
+    will-change: opacity;
+  }
+  .hero__lead {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .hero__lead-text {
+    font-size: clamp(18px, 2vw, 24px);
+    line-height: 2.4;
+    letter-spacing: 0.15em;
+    writing-mode: vertical-rl;
+    padding: 24px 0;
+  }
+  .hero__lead-text .char {
+    color: rgba(255,255,255,0.12);
+    transition: color 0s;
+  }
+  .hero__lead-text .char.lit {
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* Facility panel: single panel, slides up then pins */
+  .hero__facility-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    z-index: 5;
+    overflow: hidden;
+    will-change: transform;
+  }
+  /* Background image strip inside panel */
+  .hero__facility-bg-wrap {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .hero__facility-bg-strip {
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+  }
+  .hero__facility-bg-strip img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    flex-shrink: 0;
+    filter: grayscale(1);
+  }
+  .hero__facility-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 1;
+  }
+  /* Content area */
+  .hero__facility-content-wrap {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .hero__facility-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: opacity 0.5s var(--ease-out-expo);
+    pointer-events: none;
+  }
+  .hero__facility-item:first-child {
+    position: relative;
+  }
+  .hero__facility-item.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .hero__facility-inner {
+    max-width: 960px;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  .hero__facility-img {
+    flex: 0 0 420px;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 4px;
+    position: relative;
+  }
+  .hero__facility-img-strip {
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+  }
+  .hero__facility-img-strip img {
+    width: 420px;
+    height: 420px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .hero__facility-content {
+    flex: 1;
+  }
+  .hero__facility-title {
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 600;
+    color: var(--color-white);
+    letter-spacing: 0.08em;
+    margin-bottom: 24px;
+  }
+  .hero__facility-desc {
+    font-size: 14px;
+    line-height: 2;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 24px;
+  }
+  .hero__facility-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0;
+    text-align: left;
+  }
+  .hero__facility-table tr:first-child th,
+  .hero__facility-table tr:first-child td {
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .hero__facility-table th {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    white-space: nowrap;
+    vertical-align: top;
+    width: 100px;
+  }
+  .hero__facility-table td {
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.55);
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    vertical-align: top;
+  }
+
+  /* Split Gallery (inside hero) */
+  .hero__gallery {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    clip-path: inset(15% 15% 15% 15% round 12px);
+    will-change: clip-path;
+  }
+  .hero__gallery-side {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero__gallery-side:first-child {
+    border-right: 1px solid rgba(255,255,255,0.06);
+  }
+  .hero__gallery-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    will-change: clip-path;
+  }
+
+  /* Spacer below */
+  .spacer { height: 100vh; }
+
+  @media (max-width: 767px) {
+    .split-slider__title { display: none; }
+    .split-slider__sticky { flex-direction: column !important; height: auto; position: relative; }
+    .split-slider__scroll { height: auto !important; }
+    .split-slider__img-side { flex: none; aspect-ratio: 1; }
+    .split-slider__img-strip img { height: auto; aspect-ratio: 1; }
+    .split-slider__text-side { flex: none; padding: 24px 0; }
+    .split-slider__panel { position: relative !important; opacity: 1 !important; pointer-events: auto; padding: 0; }
+    .split-slider__panel + .split-slider__panel { margin-top: 48px; }
+    .split-slider__panel + .split-slider__panel::before {
+      content: '';
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      overflow: hidden;
+      border-radius: 5px;
+      margin-bottom: 24px;
+    }
+    .split-slider__upper { flex-direction: column !important; gap: 16px; align-items: flex-start; }
+    .split-slider__display { order: 1; }
+    .split-slider__label-group { order: 2; writing-mode: horizontal-tb; gap: 0; padding: 0; margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="parts-header">
+  <div class="parts-header__title">Parts Library</div>
+  <div class="parts-header__sub">AQUAIGNIS GARDEN SPA — Component Reference</div>
+</div>
+
+<!-- Part 1: Split Slider (sticky + image slide + text fade) -->
+<div class="part">
+  <div class="part__label">Part 01</div>
+  <div class="part__name">Split Slider — 画面固定 / スクロールで画像切替 + テキストフェード</div>
+
+  <section class="split-slider split-slider--reversed" id="split-slider-1">
+    <div class="split-slider__title">
+      <h2 class="split-slider__title-text">コンセプト</h2>
+    </div>
+    <div class="split-slider__scroll">
+      <div class="split-slider__sticky">
+        <!-- Image side -->
+        <div class="split-slider__img-side">
+          <div class="split-slider__img-strip">
+            <img src="images/ags-04.webp" alt="画像1">
+            <img src="images/ags-05.webp" alt="画像2">
+            <img src="images/ags-06.webp" alt="画像3">
+          </div>
+        </div>
+        <!-- Text side -->
+        <div class="split-slider__text-side">
+          <div class="split-slider__panel is-active" data-index="0">
+            <div class="split-slider__upper">
+              <div class="split-slider__display">CONCEPT</div>
+              <div class="split-slider__label-group">
+                <div class="split-slider__vertical vertical-title">アクアイグニスで<br>過ごす温浴のひととき</div>
+              </div>
+            </div>
+            <div class="split-slider__lower">
+              <div class="split-slider__body">
+                HACIENDA KARUIZAWAにご宿泊のお客様は、隣接する温浴施設「AQUAIGNIS GARDEN SPA」をご利用いただけます。開放感のある露天風呂や内湯、心地よい発汗を促すサウナ、そして外気浴やラウンジまで備えた温浴空間。
+              </div>
+            </div>
+          </div>
+          <div class="split-slider__panel" data-index="1">
+            <div class="split-slider__upper">
+              <div class="split-slider__display">DETAIL</div>
+              <div class="split-slider__label-group">
+                <div class="split-slider__vertical vertical-title">薪の爆ぜる音に、<br>からだを委ねる。</div>
+              </div>
+            </div>
+            <div class="split-slider__lower">
+              <div class="split-slider__body">
+                当施設では、男女ともに趣の異なる二つのサウナをご用意いたしました。揺らめく炎を眺めながら木の爆ぜる音に耳を傾ける「薪サウナ」は、古来より続く原始的な癒やしを現代のラグジュアリーへと昇華させた特別な空間です。
+              </div>
+            </div>
+          </div>
+          <div class="split-slider__panel" data-index="2">
+            <div class="split-slider__upper">
+              <div class="split-slider__display">RELAX</div>
+              <div class="split-slider__label-group">
+                <div class="split-slider__vertical vertical-title">軽井沢の空気とともに、<br>心身を整える。</div>
+              </div>
+            </div>
+            <div class="split-slider__lower">
+              <div class="split-slider__body">
+                温冷交代浴の極致を追求し、温度帯の異なる多様な水風呂を完備。火照った身体を優しく包み込む「冷冷交代浴」という贅沢な選択肢が、あなたを未だかつてない深い休息へと誘います。
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Part 2: Hero clip-path expand + overlay + text reveal -->
+<div class="part">
+  <div class="part__label">Part 02</div>
+  <div class="part__name">Hero — clip-path拡大 + 黒オーバーレイ + 文字送り</div>
+
+  <section class="hero__image-section" id="hero-clip">
+    <div class="hero__sticky">
+      <div class="hero__bg">
+        <div class="hero__bg-clip">
+          <img src="images/ags-06.webp" alt="ヒーロー">
+        </div>
+      </div>
+      <div class="hero__overlay"></div>
+      <div class="hero__lead">
+        <div class="hero__lead-text"></div>
+      </div>
+      <!-- 施設パネル: 1つのパネルが下から上がってピン留め、中で画像+テキストが切り替わる -->
+      <div class="hero__facility-panel" id="facility-panel" style="top:100%;">
+        <!-- 背景画像ストリップ -->
+        <div class="hero__facility-bg-wrap">
+          <div class="hero__facility-bg-strip" id="facility-bg-strip">
+            <img src="images/ags-04.webp" alt="内湯">
+            <img src="images/ags-05.webp" alt="外湯">
+            <img src="images/ags-02.webp" alt="サウナ">
+          </div>
+          <div class="hero__facility-bg-overlay"></div>
+        </div>
+        <!-- コンテンツ（フェード切替） -->
+        <div class="hero__facility-content-wrap">
+          <div class="hero__facility-inner">
+            <!-- コンテンツ画像ストリップ（下からスライド） -->
+            <div class="hero__facility-img">
+              <div class="hero__facility-img-strip" id="facility-img-strip">
+                <img src="images/ags-04.webp" alt="内湯">
+                <img src="images/ags-05.webp" alt="外湯">
+                <img src="images/ags-02.webp" alt="サウナ">
+              </div>
+            </div>
+            <!-- テキスト（フェード切替） -->
+            <div class="hero__facility-content" style="position:relative;">
+              <div class="hero__facility-item is-active" data-item="0">
+                <div class="hero__facility-title">内湯</div>
+                <div class="hero__facility-desc">古来より親しまれてきたヨモギのほか、香り豊かな温州ミカンの果皮やビワの葉などを使用。</div>
+                <table class="hero__facility-table">
+                  <tr><th>原材料</th><td>ヨモギ、ビワの葉、チンピ、柿の葉</td></tr>
+                  <tr><th>お湯の特徴</th><td>ヨモギ湯は血行を促進させるため、肩こりや腰痛、神経痛などをやわらげる働きがあります。また、豊富に含まれる精油成分には、すり傷、切り傷の止血や殺菌にも効果的で、よもぎの香りはストレス解消や安眠にも良いと言われています。</td></tr>
+                </table>
+              </div>
+              <div class="hero__facility-item" data-item="1">
+                <div class="hero__facility-title">外湯</div>
+                <div class="hero__facility-desc">古来より肌を優しく潤わすコメヌカのほか、和の爽やかな香りを感じるショウガなどを使用。</div>
+                <table class="hero__facility-table">
+                  <tr><th>原材料</th><td>コメヌカ、ショウガ、ヨモギ、ドクダミ</td></tr>
+                  <tr><th>お湯の特徴</th><td>コメヌカにはビタミンBが豊富に含まれ新陳代謝をよくする働きがあり、美肌、肌荒れ予防、シミ・しわの予防、対策の効能が期待されます。また、ショウガの持つ血行促進作用がやさしく働き、冷え性や消化促進などにも良いと言われています。</td></tr>
+                </table>
+              </div>
+              <div class="hero__facility-item" data-item="2">
+                <div class="hero__facility-title">サウナ</div>
+                <div class="hero__facility-desc">男女ともに趣の異なる二つのサウナをご用意。揺らめく炎を眺めながら木の爆ぜる音に耳を傾ける「薪サウナ」は、原始的な癒やしを現代のラグジュアリーへと昇華させた特別な空間です。</div>
+                <table class="hero__facility-table">
+                  <tr><th>種類</th><td>薪サウナ、フィンランドサウナ</td></tr>
+                  <tr><th>特徴</th><td>温冷交代浴の極致を追求し、温度帯の異なる多様な水風呂を完備。火照った身体を優しく包み込む「冷冷交代浴」という贅沢な選択肢が、深い休息へと誘います。</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Part 3: Hero clip-path (copy) -->
+<div class="part">
+  <div class="part__label">Part 03</div>
+  <div class="part__name">Hero — clip-path拡大 + 黒オーバーレイ + 文字送り (Copy)</div>
+
+  <section class="hero__image-section" id="hero-clip-2" data-has-gallery="true">
+    <div class="hero__sticky">
+      <!-- Split Gallery -->
+      <div class="hero__gallery" id="hero-gallery">
+        <div class="hero__gallery-side" id="gallery-left"></div>
+        <div class="hero__gallery-side" id="gallery-right"></div>
+      </div>
+      <div class="hero__overlay"></div>
+      <div class="hero__lead">
+        <div class="hero__lead-text"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="spacer"></div>
+
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Lenis
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+  });
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+  // Hero clip-path + text reveal (multi-instance)
+  const isSP = window.innerWidth <= 767;
+  const leadLinesPC = ['湯気に包まれ、','からだがほどけ、','思考が静かにゆるむ。','旅の途中で、','自分に戻る時間。'];
+  const leadLinesSP = leadLinesPC;
+  const leadLines = isSP ? leadLinesSP : leadLinesPC;
+  const vh = window.innerHeight;
+  const PX_PER_CHAR = 12;
+
+  // Gallery image data
+  var GALLERY_LEFT = [
+    { src: 'images/ags-04.webp' },
+    { src: 'images/ags-05.webp' },
+    { src: 'images/ags-06.webp' },
+    { src: 'images/ags-02.webp' }
+  ];
+  var GALLERY_RIGHT = [
+    { src: 'images/ags-03.webp' },
+    { src: 'images/ags-07.webp' },
+    { src: 'images/ags-04.webp' },
+    { src: 'images/ags-05.webp' }
+  ];
+  var GALLERY_PX_PER_IMG = 700;
+  var GALLERY_WIPE_PX = 250;
+  var GALLERY_R_OFFSET = 150;
+
+  document.querySelectorAll('.hero__image-section').forEach(function(section) {
+    var leadTextEl = section.querySelector('.hero__lead-text');
+    var heroLead = section.querySelector('.hero__lead');
+    var heroClip = section.querySelector('.hero__bg-clip');
+    var heroOverlay = section.querySelector('.hero__overlay');
+    var facilityPanel = section.querySelector('.hero__facility-panel');
+    var facilityBgStrip = section.querySelector('.hero__facility-bg-strip');
+    var facilityImgStrip = section.querySelector('.hero__facility-img-strip');
+    var facilityItems = section.querySelectorAll('.hero__facility-item');
+    var facilityCount = facilityItems.length;
+    var hasGallery = section.dataset.hasGallery === 'true';
+    var gallery = section.querySelector('.hero__gallery');
+    var galleryLeft = section.querySelector('#gallery-left');
+    var galleryRight = section.querySelector('#gallery-right');
+
+    // Build gallery images
+    if (hasGallery && galleryLeft && galleryRight) {
+      function buildGallerySide(container, imgs) {
+        imgs.forEach(function(data, i) {
+          var el = document.createElement('div');
+          el.className = 'hero__gallery-img';
+          el.style.backgroundImage = 'url(' + data.src + ')';
+          el.style.zIndex = i + 1;
+          el.style.clipPath = i === 0 ? 'inset(0% 0 0 0)' : 'inset(100% 0 0 0)';
+          container.appendChild(el);
+        });
+      }
+      buildGallerySide(galleryLeft, GALLERY_LEFT);
+      buildGallerySide(galleryRight, GALLERY_RIGHT);
+    }
+
+    // Build lead text chars
+    if (leadTextEl) {
+      leadLines.forEach(function(line, li) {
+        line.split('').forEach(function(ch) {
+          var span = document.createElement('span');
+          span.className = 'char';
+          span.textContent = ch;
+          leadTextEl.appendChild(span);
+        });
+        if (li < leadLines.length - 1) {
+          leadTextEl.appendChild(document.createElement('br'));
+        }
+      });
+    }
+    var leadChars = section.querySelectorAll('.hero__lead-text .char');
+
+    // Calc heights
+    var galleryCount = Math.max(GALLERY_LEFT.length, GALLERY_RIGHT.length);
+    var galleryScroll = hasGallery ? GALLERY_PX_PER_IMG * galleryCount : 0;
+    var clipPhase = vh; // Phase 1
+    var galleryPhaseScroll = galleryScroll; // Phase 2 (gallery)
+    var overlayPhase = vh; // Phase 3
+    var textScroll = Math.max(vh * 2, leadChars.length * PX_PER_CHAR); // Phase 4
+    var panelScroll = facilityCount > 0 ? (vh * 0.5 + vh * 1 + vh * Math.max(0, facilityCount - 1) + vh) : vh;
+
+    var totalHeight = clipPhase + galleryPhaseScroll + overlayPhase + textScroll + panelScroll;
+    section.style.height = totalHeight + 'px';
+
+    if (!heroClip && !gallery) return;
+
+    lenis.on('scroll', function() {
+      var scrolled = -section.getBoundingClientRect().top;
+      var phase = 0;
+
+      // Phase 1 (0 - vh): clip-path expand
+      var ep = Math.max(0, Math.min(1, scrolled / clipPhase));
+      var ins = 15 * (1 - ep);
+      var rad = 12 * (1 - ep);
+      if (heroClip) {
+        heroClip.style.clipPath = 'inset(' + ins + '% ' + ins + '% ' + ins + '% ' + ins + '% round ' + rad + 'px)';
+      }
+      if (hasGallery && gallery) {
+        gallery.style.clipPath = 'inset(' + ins + '% ' + ins + '% ' + ins + '% ' + ins + '% round ' + rad + 'px)';
+      }
+      phase += clipPhase;
+
+      // Phase 2 (gallery): split gallery wipe (starts after clip-path done)
+      if (hasGallery && gallery) {
+        var galScrolled = Math.max(0, scrolled - phase);
+
+        function updateGalSide(container, imgs, localY) {
+          var els = container.querySelectorAll('.hero__gallery-img');
+          imgs.forEach(function(_, i) {
+            var el = els[i];
+            if (!el) return;
+            var wipeStart = i * GALLERY_PX_PER_IMG - GALLERY_WIPE_PX;
+            var wipeEnd = i * GALLERY_PX_PER_IMG;
+            if (i === 0) {
+              el.style.clipPath = 'inset(0% 0 0 0)';
+            } else if (localY < wipeStart) {
+              el.style.clipPath = 'inset(100% 0 0 0)';
+            } else if (localY <= wipeEnd) {
+              var p = Math.max(0, Math.min(1, (localY - wipeStart) / GALLERY_WIPE_PX));
+              el.style.clipPath = 'inset(' + ((1 - p) * 100).toFixed(1) + '% 0 0 0)';
+            } else {
+              el.style.clipPath = 'inset(0% 0 0 0)';
+            }
+          });
+        }
+        if (galleryLeft) updateGalSide(galleryLeft, GALLERY_LEFT, galScrolled);
+        if (galleryRight) updateGalSide(galleryRight, GALLERY_RIGHT, Math.max(0, galScrolled - GALLERY_R_OFFSET));
+      }
+      phase += galleryPhaseScroll;
+
+      // Phase 3: overlay
+      var op = Math.max(0, Math.min(1, (scrolled - phase) / overlayPhase));
+      heroOverlay.style.opacity = op * 0.6;
+      if (heroLead) heroLead.style.opacity = op > 0.3 ? 1 : 0;
+
+
+      phase += overlayPhase;
+
+      // Phase 4: chars
+      if (leadChars.length > 0) {
+        var cp = Math.max(0, Math.min(1, (scrolled - phase) / textScroll));
+        var lit = Math.floor(cp * leadChars.length);
+        leadChars.forEach(function(c, i) { c.classList.toggle('lit', i < lit); });
+      }
+
+      var textEnd = phase + textScroll;
+
+      // Phase 5: facility panel
+      if (facilityPanel && facilityCount > 0) {
+        var p5 = Math.max(0, scrolled - textEnd);
+        var fadeOutDur = vh * 0.5;
+        var slideUpDur = vh * 1;
+        var switchDur = vh * 1;
+
+        if (p5 > 0 && heroLead) {
+          heroLead.style.opacity = 1 - Math.min(1, p5 / fadeOutDur);
+        }
+        var se = p5 - fadeOutDur;
+        var sp = Math.max(0, Math.min(1, se / slideUpDur));
+        facilityPanel.style.top = ((1 - sp) * 100) + '%';
+
+        var ss = fadeOutDur + slideUpDur;
+        var sw = Math.max(0, p5 - ss);
+        var st = switchDur * Math.max(1, facilityCount - 1);
+        var swp = st > 0 ? Math.min(1, sw / st) : 0;
+
+        if (facilityBgStrip && facilityCount > 1) {
+          facilityBgStrip.style.transform = 'translateY(' + -(swp * vh * (facilityCount - 1)) + 'px)';
+        }
+        if (facilityImgStrip && facilityCount > 1) {
+          facilityImgStrip.style.transform = 'translateY(' + -(swp * 420 * (facilityCount - 1)) + 'px)';
+        }
+        var ci = Math.min(facilityCount - 1, Math.round(swp * (facilityCount - 1)));
+        facilityItems.forEach(function(item, i) { item.classList.toggle('is-active', i === ci); });
+      }
+    });
+  });
+
+  // Split Slider logic
+  document.querySelectorAll('.split-slider').forEach(slider => {
+    const scrollWrap = slider.querySelector('.split-slider__scroll');
+    const imgStrip = slider.querySelector('.split-slider__img-strip');
+    const imgSide = slider.querySelector('.split-slider__img-side');
+    const panels = slider.querySelectorAll('.split-slider__panel');
+    const counterCurrent = slider.querySelector('.split-slider__counter-current');
+    const totalPanels = panels.length;
+
+    if (!scrollWrap || !imgStrip || totalPanels === 0 || window.innerWidth <= 767) return;
+
+    // Set scroll height dynamically
+    const scrollHeight = window.innerHeight * totalPanels;
+    scrollWrap.style.height = scrollHeight + 'px';
+
+    let lastIndex = -1;
+    lenis.on('scroll', () => {
+      const rect = scrollWrap.getBoundingClientRect();
+      const wrapH = scrollWrap.offsetHeight;
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(1, scrolled / (wrapH - window.innerHeight)));
+
+      // Image strip slide
+      const imgH = imgSide.offsetHeight;
+      const maxTranslate = imgH * (totalPanels - 1);
+      const ty = -(progress * maxTranslate);
+      imgStrip.style.transform = 'translateY(' + ty + 'px)';
+
+      // Text fade
+      const currentPos = progress * (totalPanels - 1);
+      const activeIndex = Math.min(totalPanels - 1, Math.round(currentPos));
+      if (activeIndex !== lastIndex) {
+        panels.forEach((p, i) => {
+          p.classList.toggle('is-active', i === activeIndex);
+        });
+        if (counterCurrent) {
+          counterCurrent.textContent = String(activeIndex + 1).padStart(2, '0');
+        }
+        lastIndex = activeIndex;
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>
