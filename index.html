@@ -651,22 +651,18 @@
     color: var(--color-ink);
   }
   .business__intro {
-    padding-top: 8px;
     font-size: 14px;
     line-height: 2;
     color: var(--color-gray-dark);
   }
-  /* Scroll-driven sticky card section */
+  /* Facility cards: vertical stack (PC + SP) */
   .business__cards-wrap {
     position: relative;
-    height: 200vh; /* 2 cards × 100vh each */
   }
   .business__bg {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow: hidden;
+    position: relative;
     background: var(--color-black);
+    padding: 60px 0;
   }
   .business__bg-image {
     position: absolute;
@@ -675,10 +671,10 @@
   }
   .business__bg-image img {
     width: 100%;
-    height: 120%;
+    min-height: 100%;
+    height: auto;
     object-fit: cover;
     object-position: center;
-    will-change: transform;
   }
   .business__bg-image::after {
     content: '';
@@ -687,92 +683,62 @@
     background: rgba(0,0,0,0.65);
   }
   .business__bg-label {
-    position: absolute;
-    top: 24px;
-    left: 24px;
-    font-family: var(--font-en);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    color: rgba(255,255,255,0.4);
-    line-height: 1.4;
-  }
-  .business__counter {
-    position: absolute;
-    top: 24px;
-    right: 24px;
-    font-family: var(--font-en);
-    font-size: 14px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.6);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .business__counter-current {
-    color: var(--color-white);
-    transition: all 0.3s ease;
-  }
-  .business__counter-line {
-    width: 32px;
-    height: 1px;
-    background: rgba(255,255,255,0.3);
+    display: none;
   }
   .business__cards {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 60px;
-  }
-  /* Image strip: continuous vertical scroll */
-  .business__img-window {
-    width: clamp(320px, 42vw, 600px);
-    aspect-ratio: 4 / 3;
-    height: auto;
-    overflow: hidden;
-    border-radius: 4px;
-    flex-shrink: 0;
     position: relative;
-  }
-  .business__img-strip {
     display: flex;
     flex-direction: column;
-    will-change: transform;
+    gap: 0;
+    padding: 0 2rem;
   }
-  .business__img-strip img {
-    width: clamp(280px, 38vw, 540px);
-    height: clamp(280px, 38vw, 540px);
-    object-fit: cover;
-    flex-shrink: 0;
+  .business__img-window {
+    display: none;
   }
-  /* Text stack: text fades */
   .business__text-stack {
-    position: relative;
-    min-width: 260px;
-    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
   }
   .business__card-body {
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    transition: opacity 0.4s var(--ease-out-expo);
-    pointer-events: none;
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    padding: 48px 0;
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
   }
   .business__card-body:first-child {
     position: relative;
   }
   .business__card-body.is-active {
     opacity: 1;
-    pointer-events: auto;
   }
-  .business__card-body {
-    padding-top: 4px;
+  .business__card-img-sp {
+    display: block;
+    width: clamp(200px, 28vw, 400px);
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+  .business__card-img-sp img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+  }
+  .business__card-text {
+    flex: 1;
+    min-width: 0;
+  }
+  .business__card-sub {
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.55);
+    margin-top: 4px;
+    margin-bottom: 24px;
   }
   .business__card-label {
     font-size: 10px;
@@ -786,18 +752,17 @@
     color: var(--color-white);
     letter-spacing: 0.03em;
     line-height: 1.5;
-    margin-bottom: 24px;
+    margin-bottom: 0;
+    width: 100%;
   }
   .business__card-desc {
     font-size: 13px;
     line-height: 2;
-    color: rgba(255,255,255,0.8);
-    max-width: 400px;
+    color: rgba(255,255,255,0.9);
     margin-bottom: 24px;
   }
   .business__card-table {
     width: 100%;
-    max-width: 400px;
     border-collapse: collapse;
     margin-bottom: 24px;
   }
@@ -808,7 +773,7 @@
   .business__card-table th {
     font-size: 12px;
     font-weight: 600;
-    color: rgba(255,255,255,0.85);
+    color: rgba(255,255,255,0.9);
     text-align: left;
     padding: 12px 16px 12px 0;
     border-bottom: 1px solid rgba(255,255,255,0.15);
@@ -819,13 +784,10 @@
   .business__card-table td {
     font-size: 13px;
     line-height: 1.8;
-    color: rgba(255,255,255,0.75);
+    color: rgba(255,255,255,0.85);
     padding: 12px 0;
     border-bottom: 1px solid rgba(255,255,255,0.15);
     vertical-align: top;
-  }
-  .business__card-img-sp {
-    display: none;
   }
   .business__card-link {
     display: inline-flex;
@@ -949,11 +911,11 @@
   }
   .nearby__sticky {
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: visible;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
-    padding: 0 1rem;
+    padding: 0 1rem 2rem;
   }
   .nearby__sticky::-webkit-scrollbar { display: none; }
   .nearby__track {
@@ -1175,6 +1137,9 @@
     border-radius: 5px;
     position: relative;
     overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
   .footer__bg {
     position: absolute;
@@ -1195,7 +1160,7 @@
   }
   .footer__bottom {
     padding: 1rem;
-    min-height: 100vh;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1259,7 +1224,7 @@
     gap: 16px;
     align-items: center;
     justify-content: center;
-    margin-bottom: 40px;
+    margin-bottom: 0;
   }
   .footer__sns a {
     font-family: var(--font-en);
@@ -1276,7 +1241,7 @@
     color: rgba(255,255,255,0.25);
     letter-spacing: 0.05em;
     text-align: center;
-    padding: 20px 1rem;
+    padding: 0 1rem 20px;
     position: relative;
     z-index: 1;
   }
@@ -1326,41 +1291,19 @@
     .footer { margin-top: 5rem; }
 
     .business__header { grid-template-columns: 1fr; gap: 24px; padding: 32px 0; }
-    .business__cards-wrap { height: auto !important; }
-    .business__bg { position: relative; height: auto; padding: 40px 0; }
-    .business__cards {
-      position: relative;
-      flex-direction: column;
-      gap: 48px;
-      padding: 24px;
-    }
-    .business__img-window { display: none; }
-    .business__text-stack { min-height: auto; }
+    .business__bg { padding: 32px 0; }
+    .business__cards { padding: 0 1rem; }
     .business__card-body {
-      position: relative !important;
-      opacity: 1 !important;
-      display: block;
-    }
-    .business__card-body + .business__card-body {
-      margin-top: 48px;
+      flex-direction: column;
+      gap: 16px;
+      padding: 32px 0;
     }
     .business__card-img-sp {
-      display: block;
       width: 100%;
-      aspect-ratio: 4/3;
-      overflow: hidden;
-      border-radius: 4px;
-      margin-bottom: 16px;
     }
     .business__card-img-sp img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      aspect-ratio: 4 / 3;
     }
-    .business__counter { display: none; }
-    .business__bg-label { display: none; }
-    .business__card { flex: 0 0 260px; }
-    .business__card-img { width: 140px; height: 140px; }
 
     .amenity__header { grid-template-columns: 1fr; gap: 24px; padding: 32px 0; }
     .amenity__grid { grid-template-columns: 1fr !important; gap: 24px; }
@@ -1495,40 +1438,50 @@
         <div class="business__text-stack">
           <div class="business__card-body is-active" data-index="0">
             <div class="business__card-img-sp"><img src="images/ags-04.webp" alt="森の湯"></div>
+            <div class="business__card-text">
             <div class="business__card-title">森の湯</div>
-            <div class="business__card-sub" style="font-size:14px; font-weight:400; color:rgba(255,255,255,0.6); margin-top:-16px; margin-bottom:16px;">内湯</div>
+            <div class="business__card-sub">内湯</div>
             <div class="business__card-desc">古来より親しまれてきたヨモギのほか、香り豊かな温州ミカンの果皮やビワの葉などを使用。</div>
             <table class="business__card-table">
               <tr><th>原材料</th><td>ヨモギ、ビワの葉、チンピ、柿の葉</td></tr>
               <tr><th>お湯の特徴</th><td>ヨモギ湯は血行を促進させるため、肩こりや腰痛、神経痛などをやわらげる働きがあります。また、豊富に含まれる精油成分には、すり傷、切り傷の止血や殺菌にも効果的で、よもぎの香りはストレス解消や安眠にも良いと言われています。</td></tr>
             </table>
+            </div>
           </div>
           <div class="business__card-body" data-index="1">
             <div class="business__card-img-sp"><img src="images/ags-06.webp" alt="霧の湯"></div>
+            <div class="business__card-text">
             <div class="business__card-title">霧の湯</div>
-            <div class="business__card-sub" style="font-size:14px; font-weight:400; color:rgba(255,255,255,0.6); margin-top:-16px; margin-bottom:16px;">露天</div>
+            <div class="business__card-sub">露天</div>
             <div class="business__card-desc">古来より肌を優しく潤わすコメヌカのほか、和の爽やかな香りを感じるショウガなどを使用。</div>
             <table class="business__card-table">
               <tr><th>原材料</th><td>コメヌカ、ショウガ、ヨモギ、ドクダミ</td></tr>
               <tr><th>お湯の特徴</th><td>コメヌカにはビタミンBが豊富に含まれ新陳代謝をよくする働きがあり、美肌、肌荒れ予防、シミ・しわの予防、対策の効能が期待されます。また、ショウガの持つ血行促進作用がやさしく働き、冷え性や消化促進などにも良いと言われています。</td></tr>
             </table>
+            </div>
           </div>
           <div class="business__card-body" data-index="2">
             <div class="business__card-img-sp"><img src="images/ags-02.webp" alt="火坐・森蒸"></div>
+            <div class="business__card-text">
             <div class="business__card-title">火坐・森蒸</div>
-            <div class="business__card-sub" style="font-size:14px; font-weight:400; color:rgba(255,255,255,0.6); margin-top:-16px; margin-bottom:16px;">2種類のサウナ</div>
+            <div class="business__card-sub">2種類のサウナ</div>
             <div class="business__card-desc">薪の火を用いたサウナ「火坐（ひざ）」では、ゆらぐ炎とともに、身体の芯まで温まる感覚を。オートロウリュサウナ「森蒸（しんじょう）」では、20分ごとに蒸気が満ち、安定した熱と湿度のなかで発汗へと導きます。異なるふたつの熱を、それぞれのリズムでお楽しみください。</div>
+            </div>
           </div>
           <div class="business__card-body" data-index="3">
             <div class="business__card-img-sp"><img src="images/ags-06.webp" alt="霧氷・風待ちの湯"></div>
+            <div class="business__card-text">
             <div class="business__card-title">霧氷・風待ちの湯</div>
-            <div class="business__card-sub" style="font-size:14px; font-weight:400; color:rgba(255,255,255,0.6); margin-top:-16px; margin-bottom:16px;">露天の水風呂とぬる湯</div>
+            <div class="business__card-sub">露天の水風呂とぬる湯</div>
             <div class="business__card-desc">露天の水風呂「霧氷」では、外気を感じながら、より研ぎ澄まされた冷たさを実感していただけます。温度を抑えた「風待ちの湯」は、水風呂後の身体を穏やかに整えるための設えです。</div>
+            </div>
           </div>
           <div class="business__card-body" data-index="4">
             <div class="business__card-img-sp"><img src="images/ags-03.webp" alt="アメニティ"></div>
+            <div class="business__card-text">
             <div class="business__card-title">アメニティ</div>
             <div class="business__card-desc">タオルセットに加え、歯ブラシなどのアメニティもご用意しております。入浴の前後まで快適にお過ごしいただける環境を整えています。</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1723,42 +1676,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Business cards: scroll-driven sticky slider (HKT-style)
-  const cardsWrap = document.querySelector('.business__cards-wrap');
-  const imgStrip = document.querySelector('.business__img-strip');
-  const imgWindow = document.querySelector('.business__img-window');
-  const stackTexts = document.querySelectorAll('.business__text-stack .business__card-body');
-  const counterCurrent = document.querySelector('.business__counter-current');
-  const totalCards = stackTexts.length;
-
-  if (cardsWrap && imgStrip && totalCards > 0) {
-    let lastIndex = -1;
-    lenis.on('scroll', () => {
-      const rect = cardsWrap.getBoundingClientRect();
-      const wrapHeight = cardsWrap.offsetHeight;
-      const scrolled = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / (wrapHeight - window.innerHeight)));
-
-      // Smooth continuous translateY for image strip
-      const imgSize = imgWindow.offsetHeight;
-      const maxTranslate = imgSize * (totalCards - 1);
-      const translateY = -(progress * maxTranslate);
-      imgStrip.style.transform = `translateY(${translateY}px)`;
-
-      // Text: sync with image position (round = switch when image is half visible)
-      const currentImgPosition = progress * (totalCards - 1);
-      const activeIndex = Math.min(totalCards - 1, Math.round(currentImgPosition));
-      if (activeIndex !== lastIndex) {
-        stackTexts.forEach((text, i) => {
-          text.classList.toggle('is-active', i === activeIndex);
-        });
-        if (counterCurrent) {
-          counterCurrent.textContent = String(activeIndex + 1).padStart(2, '0');
-        }
-        lastIndex = activeIndex;
-      }
-    });
-  }
+  // Business cards: vertical stack (no scroll slider)
 
   // Nearby: native horizontal swipe (no JS scroll-driven)
 
@@ -1801,7 +1719,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Parallax: all images with height 120% shift on scroll
-  const prlxContainers = document.querySelectorAll('.split__image, .nearby__card-img, .business__bg-image');
+  const prlxContainers = document.querySelectorAll('.split__image, .nearby__card-img');
   lenis.on('scroll', () => {
     prlxContainers.forEach(container => {
       const img = container.querySelector('img');
