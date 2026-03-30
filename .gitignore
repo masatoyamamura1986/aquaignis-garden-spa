@@ -24,3 +24,4 @@ style-guide-*
 images/*.jpg
 images/hacienda-fv*
 .vercel
+.env

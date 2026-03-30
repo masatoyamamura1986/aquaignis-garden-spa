@@ -412,17 +412,56 @@
 
   /* ===== 1. Hero ===== */
   /* ===== 1. Hero ===== */
-  .hero__catch-section {
+  .hero {
+    position: relative;
     height: 100vh;
+    overflow: hidden;
+  }
+  .hero__slider {
+    position: absolute;
+    inset: 0;
+  }
+  .hero__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+  }
+  .hero__slide.is-active {
+    opacity: 1;
+  }
+  .hero__slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    animation: heroZoom 7s ease-out forwards;
+  }
+  @keyframes heroZoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.08); }
+  }
+  .hero__slide.is-active img {
+    animation: heroZoom 7s ease-out forwards;
+  }
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+    z-index: 1;
+  }
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 1rem;
   }
   .hero__catch {
     font-size: clamp(24px, 3vw, 40px);
     font-weight: 600;
-    color: var(--color-ink);
+    color: var(--color-white);
     letter-spacing: 0.15em;
     line-height: 1.8;
     writing-mode: vertical-rl;
@@ -440,13 +479,14 @@
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.25em;
-    color: var(--color-ink);
+    color: var(--color-white);
+    z-index: 2;
   }
   .hero__scroll-hint::after {
     content: '';
     width: 1px;
     height: 60px;
-    background: var(--color-ink);
+    background: var(--color-white);
     animation: scrollLine 2s var(--ease-out-expo) infinite;
   }
   @keyframes scrollLine {
@@ -465,28 +505,6 @@
   .hero__catch.is-animated .catch-char {
     opacity: 1;
     filter: blur(0px);
-  }
-  .hero__image-section {
-    position: relative;
-    height: 200vh;
-  }
-  .hero__sticky {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow: hidden;
-  }
-  .hero__bg {
-    position: absolute;
-    inset: 0;
-  }
-  .hero__bg img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 30%;
-    clip-path: inset(15% 15% 15% 15% round 12px);
-    will-change: clip-path;
   }
 
   /* ===== 2. Lead ===== */
@@ -648,6 +666,14 @@
     font-weight: 500;
     letter-spacing: -0.03em;
     line-height: 1.15;
+    color: var(--color-ink);
+  }
+  .business__heading-copy {
+    font-size: clamp(16px, 1.8vw, 22px);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 2;
+    margin-top: 16px;
     color: var(--color-ink);
   }
   .business__intro {
@@ -984,6 +1010,9 @@
   }
   .nearby__card-btn {
     margin-top: 16px;
+  }
+  .nearby__dots {
+    display: none;
   }
   .nearby__more {
     text-align: center;
@@ -1323,6 +1352,23 @@
     .nearby__sticky::-webkit-scrollbar { display: none; }
     .nearby__track { padding-right: 1rem; }
     .nearby__card { flex: 0 0 80vw; scroll-snap-align: start; }
+    .nearby__dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 0;
+    }
+    .nearby__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-gray-light);
+      transition: background 0.3s ease;
+      cursor: pointer;
+    }
+    .nearby__dot.is-active {
+      background: var(--color-ink);
+    }
 
     .access-sticky { grid-template-columns: 1fr; gap: 24px; }
     .info-table th {
@@ -1368,19 +1414,18 @@
 </div>
 
 <main>
-<!-- 1a. Catch -->
-<div class="hero__catch-section">
-  <div class="hero__catch" data-catch="森と水にととのう、|静かな循環"></div>
-  <div class="hero__scroll-hint">SCROLL DOWN</div>
-</div>
-
-<!-- 1b. Image (sticky + clip-path + overlay) -->
-<section class="hero__image-section">
-  <div class="hero__sticky">
-    <div class="hero__bg">
-      <img src="images/ags-06.webp" alt="AQUAIGNIS GARDEN SPA 露天風呂">
-    </div>
+<!-- 1. Hero Slider -->
+<section class="hero">
+  <div class="hero__slider">
+    <div class="hero__slide is-active"><img src="images/ags-06.webp" alt="AQUAIGNIS GARDEN SPA 露天風呂"></div>
+    <div class="hero__slide"><img src="images/ags-04.webp" alt="AQUAIGNIS GARDEN SPA 内湯"></div>
+    <div class="hero__slide"><img src="images/ags-02.webp" alt="AQUAIGNIS GARDEN SPA サウナ"></div>
   </div>
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <div class="hero__catch" data-catch="森と水にととのう、|静かな循環"></div>
+  </div>
+  <div class="hero__scroll-hint">SCROLL DOWN</div>
 </section>
 
 
@@ -1416,9 +1461,10 @@
     <div class="business__heading">
       <div class="business__heading-jp">施設案内</div>
       <div class="business__heading-en">FACILITIES</div>
+      <div class="business__heading-copy">森に浸かり、霧に包まれ、火に身を寄り、水に還る。</div>
     </div>
     <div class="business__intro fade-in fade-in--delay1">
-      <p>AQUAIGNIS GARDEN SPAでは、薬草を用いた内湯「森の湯」、露天「霧の湯」、2種類のサウナをご用意しています。入浴の前後まで快適にお過ごしいただける環境を整えています。</p>
+      <p>AQUAIGNIS GARDEN SPAでは、長野県産の薬草をメインに用いた内湯「森の湯」、露天「霧の湯」と2種類のフィンランド式サウナをご用意しています。</p>
     </div>
   </div>
   <div class="business__cards-wrap">
@@ -1463,9 +1509,9 @@
           <div class="business__card-body" data-index="2">
             <div class="business__card-img-sp"><img src="images/ags-02.webp" alt="火坐・森蒸"></div>
             <div class="business__card-text">
-            <div class="business__card-title">火坐・森蒸</div>
-            <div class="business__card-sub">2種類のサウナ</div>
-            <div class="business__card-desc">薪の火を用いたサウナ「火坐（ひざ）」では、ゆらぐ炎とともに、身体の芯まで温まる感覚を。オートロウリュサウナ「森蒸（しんじょう）」では、20分ごとに蒸気が満ち、安定した熱と湿度のなかで発汗へと導きます。異なるふたつの熱を、それぞれのリズムでお楽しみください。</div>
+            <div class="business__card-title">火坐(屋外)・森蒸(屋内)</div>
+            <div class="business__card-sub">２種類のサウナ</div>
+            <div class="business__card-desc">薪の火を用いたサウナ「火坐（ひざ）」では、ゆらぐ炎とともに、身体の芯まで温る感覚を。オートロウリュサウナ「森蒸（しんじょう）」では、20分ごとに蒸気が満ち、安定した熱と湿度のなかで発汗へと導きます。異なるふたつの熱を、それぞれのリズムでお楽しみください。</div>
             </div>
           </div>
           <div class="business__card-body" data-index="3">
@@ -1480,7 +1526,7 @@
             <div class="business__card-img-sp"><img src="images/ags-03.webp" alt="アメニティ"></div>
             <div class="business__card-text">
             <div class="business__card-title">アメニティ</div>
-            <div class="business__card-desc">タオルセットに加え、歯ブラシなどのアメニティもご用意しております。入浴の前後まで快適にお過ごしいただける環境を整えています。</div>
+            <div class="business__card-desc">化粧水などに加え、歯ブラシ、カミソリ、化粧水・乳液などのスキンケアアイテムもご用意しております。入浴の前後まで快適にお過ごしいただける環境を整えています。</div>
             </div>
           </div>
         </div>
@@ -1507,7 +1553,7 @@
         <div class="nearby__card">
           <div class="nearby__card-img"><img src="images/nearby-lounge.webp" alt="SHARE LOUNGE"></div>
           <div class="nearby__card-title">SHARE LOUNGE 軽井沢 T-SITE</div>
-          <div class="nearby__card-desc">駅直結のラウンジ、カフェ・バー・ワークスペースとして使え、温浴後の休息にも対応。</div>
+          <div class="nearby__card-desc">AQUAIGNIS GARDEN SPA 館内の開放的なラウンジ、カフェ・バー・ワークスペース、温浴後の休息に最適。</div>
           <table class="nearby__card-table">
             <tr><th>電話番号</th><td>0267-41-6929</td></tr>
             <tr><th>営業時間</th><td>09:00〜22:00</td></tr>
@@ -1557,6 +1603,7 @@
       </div>
     </div>
   </div>
+  <div class="nearby__dots" id="nearby-dots"></div>
   <div class="nearby__more">
     <a href="https://store.tsite.jp/karuizawa/floor/" class="btn-pill" target="_blank" style="padding: 18px 56px; font-size: 14px; background: var(--color-ink); color: var(--color-white); border-color: var(--color-ink);">その他 施設はこちら</a>
   </div>
@@ -1574,13 +1621,14 @@
   </div>
   <div class="access-sticky__cards">
     <table class="info-table fade-in">
-      <tr><th>施設名</th><td>AQUAIGNIS GARDEN SPA</td></tr>
+      <tr><th>施設名</th><td>AQUAIGNIS GARDEN SPA（アクアイグニス ガーデン スパ）</td></tr>
       <tr><th>住所</th><td><a href="https://maps.app.goo.gl/98bkw1GwruJa8Dkk8" target="_blank" style="color:var(--color-ink); text-decoration:underline; text-underline-offset:3px;">長野県北佐久郡軽井沢町軽井沢中谷地 1178-1293（軽井沢 T-SITE 内）</a></td></tr>
       <tr><th>電話番号</th><td><a href="tel:0267-46-8003" style="color:var(--color-ink); text-decoration:none;">0267-46-8003</a></td></tr>
-      <tr><th>営業時間</th><td>2026年3月17日（火）〜 4月24日（金） 8:00 – 22:00（最終入館 21:00）<br>2026年4月25日（土）〜  6:00 – 23:00（最終入館 22:00）</td></tr>
-      <tr><th>入浴料金</th><td>1,300円（土日祝含む）</td></tr>
+      <tr><th>営業時間</th><td>8:00 – 22:00（最終入館 21:00）</td></tr>
+      <tr><th>入浴料金</th><td>大人（中学生以上）1,300円（土日祝含む）<br>子供（3歳〜小学生）500円<br>幼児（3歳未満）無料<br>レンタルタオルセット 400円<br><a href="https://www.sharelounge.jp/store/3738" target="_blank" style="color:var(--color-ink); text-decoration:underline; text-underline-offset:3px;">お得なSHARE LOUNGEとのセットプランもございます。</a></td></tr>
       <tr><th>アクセス</th><td>JR 北陸新幹線・しなの鉄道「軽井沢」駅隣接</td></tr>
-      <tr><th>マナー</th><td>おむつをご使用のお客様に関しましては、衛生を保つため浴槽での入浴をご遠慮頂いております。</td></tr>
+      <tr><th>駐車場</th><td>軽井沢 T-SITE 駐車場（150台）<br>ご入浴のお客様は120分無料でご利用いただけます。</td></tr>
+      <tr><th>マナー</th><td>おむつをご使用のお客様に関しましては、衛生を保つため浴槽での入浴をご遠慮頂いております。<br>備え付けのベビーバスをご利用いただけます。</td></tr>
       <tr><th>注意事項</th><td>・お子様の混浴は120cm以下もしくは7歳未満までとさせていただきます。<br>・サウナの利用は、中学生以上とさせていただきます。<br>・反社会的勢力並びにその関係者とみなされる方、入れ墨（タトゥー）及び、泥酔の方はご入館を固くお断りいたします。</td></tr>
     </table>
   </div>
@@ -1661,24 +1709,46 @@ document.addEventListener('DOMContentLoaded', () => {
     observer.observe(catchEl);
   }
 
-  // Hero clip-path expand only
-  const heroImageSection = document.querySelector('.hero__image-section');
-  const heroImg = document.querySelector('.hero__bg img');
-  const vh = window.innerHeight;
-
-  if (heroImageSection && heroImg) {
-    lenis.on('scroll', () => {
-      const scrolled = -heroImageSection.getBoundingClientRect().top;
-      const expandProgress = Math.max(0, Math.min(1, scrolled / vh));
-      const inset = 15 * (1 - expandProgress);
-      const radius = 12 * (1 - expandProgress);
-      heroImg.style.clipPath = 'inset(' + inset + '% ' + inset + '% ' + inset + '% ' + inset + '% round ' + radius + 'px)';
-    });
+  // Hero slider: fade + zoom
+  const heroSlides = document.querySelectorAll('.hero__slide');
+  if (heroSlides.length > 1) {
+    let currentSlide = 0;
+    setInterval(() => {
+      heroSlides[currentSlide].classList.remove('is-active');
+      currentSlide = (currentSlide + 1) % heroSlides.length;
+      heroSlides[currentSlide].classList.add('is-active');
+      // Reset zoom animation
+      const img = heroSlides[currentSlide].querySelector('img');
+      img.style.animation = 'none';
+      img.offsetHeight; // reflow
+      img.style.animation = '';
+    }, 6000);
   }
 
   // Business cards: vertical stack (no scroll slider)
 
-  // Nearby: native horizontal swipe (no JS scroll-driven)
+  // Nearby: dot indicators (SP only)
+  const nearbyDotsWrap = document.getElementById('nearby-dots');
+  const nearbySticky = document.querySelector('.nearby__sticky');
+  const nearbyCards = document.querySelectorAll('.nearby__card');
+  if (nearbyDotsWrap && nearbySticky && nearbyCards.length > 0) {
+    nearbyCards.forEach((card, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'nearby__dot' + (i === 0 ? ' is-active' : '');
+      dot.addEventListener('click', () => {
+        const cardWidth = nearbyCards[0].offsetWidth + 32;
+        nearbySticky.scrollTo({ left: cardWidth * i, behavior: 'smooth' });
+      });
+      nearbyDotsWrap.appendChild(dot);
+    });
+    const dots = nearbyDotsWrap.querySelectorAll('.nearby__dot');
+    nearbySticky.addEventListener('scroll', () => {
+      const scrollLeft = nearbySticky.scrollLeft;
+      const cardWidth = nearbyCards[0].offsetWidth + 32;
+      const activeIndex = Math.round(scrollLeft / cardWidth);
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === activeIndex));
+    });
+  }
 
   // Menu toggle
   const menuBtn = document.getElementById('menu-btn');
