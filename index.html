@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
 <title>AQUAIGNIS GARDEN SPA | 軽井沢駅直結の薬草湯・サウナ・日帰りスパ</title>
 <meta name="description" content="軽井沢駅直結の AQUAIGNIS GARDEN SPA。ザ・コンランショップ監修の洗練空間で、薬草を用いた内湯「森の湯」、露天「霧の湯」、2種類のサウナ「火坐」「森蒸」、水風呂、ラウンジを楽しめる日帰りスパ。入浴料1,300円。">
 <link rel="canonical" href="https://aquaignis-garden-spa.vercel.app/">
@@ -309,6 +308,7 @@
   .header__logo-img {
     height: 40px;
     width: auto;
+    filter: brightness(0) invert(1);
   }
   .header__logo-main {
     font-family: var(--font-en);
@@ -337,17 +337,18 @@
     padding: 6px 14px;
     border: 1px solid var(--color-ink);
     border-radius: 999px;
-    background: transparent;
+    background: var(--color-ink);
     cursor: pointer;
     font-family: var(--font-en);
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.12em;
-    color: var(--color-ink);
+    color: var(--color-white);
     transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   }
   .header__menu-btn:hover {
-    background: var(--color-ink);
+    background: var(--color-black);
+    border-color: var(--color-black);
     color: var(--color-white);
   }
   .header__menu-btn.is-open {
@@ -1013,7 +1014,21 @@
     margin-top: 16px;
   }
   .nearby__dots {
-    display: none;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 0;
+  }
+  .nearby__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-gray-light);
+    transition: background 0.3s ease;
+    cursor: pointer;
+  }
+  .nearby__dot.is-active {
+    background: var(--color-ink);
   }
   .nearby__more {
     text-align: center;
@@ -1733,7 +1748,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const nearbySticky = document.querySelector('.nearby__sticky');
   const nearbyCards = document.querySelectorAll('.nearby__card');
   if (nearbyDotsWrap && nearbySticky && nearbyCards.length > 0) {
-    nearbyCards.forEach((card, i) => {
+    const isSP = window.innerWidth < 768;
+    const dotCount = isSP ? nearbyCards.length : Math.min(nearbyCards.length, 4);
+    for (let i = 0; i < dotCount; i++) {
       const dot = document.createElement('span');
       dot.className = 'nearby__dot' + (i === 0 ? ' is-active' : '');
       dot.addEventListener('click', () => {
@@ -1741,12 +1758,12 @@ document.addEventListener('DOMContentLoaded', () => {
         nearbySticky.scrollTo({ left: cardWidth * i, behavior: 'smooth' });
       });
       nearbyDotsWrap.appendChild(dot);
-    });
+    }
     const dots = nearbyDotsWrap.querySelectorAll('.nearby__dot');
     nearbySticky.addEventListener('scroll', () => {
       const scrollLeft = nearbySticky.scrollLeft;
       const cardWidth = nearbyCards[0].offsetWidth + 32;
-      const activeIndex = Math.round(scrollLeft / cardWidth);
+      const activeIndex = Math.min(dotCount - 1, Math.round(scrollLeft / cardWidth));
       dots.forEach((d, i) => d.classList.toggle('is-active', i === activeIndex));
     });
   }
