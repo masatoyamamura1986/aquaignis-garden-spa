@@ -1557,10 +1557,10 @@
                 <img src="images/ags-02b.webp" alt="森蒸（屋内）">
                 <img src="images/ags-02.webp" alt="火坐・森蒸">
               </div>
-              <div class="business__slider-dots">
-                <button class="business__slider-dot is-active" aria-label="画像1"></button>
-                <button class="business__slider-dot" aria-label="画像2"></button>
-              </div>
+            </div>
+            <div class="business__slider-dots">
+              <button class="business__slider-dot is-active" aria-label="画像1"></button>
+              <button class="business__slider-dot" aria-label="画像2"></button>
             </div>
             <div class="business__card-text">
             <div class="business__card-title">火坐<span style="font-size: 0.7em">(屋外)</span>・森蒸<span style="font-size: 0.7em">(屋内)</span></div>
@@ -1885,7 +1885,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.business__slider').forEach(slider => {
     const track = slider.querySelector('.business__slider-track');
     const imgs = track.querySelectorAll('img');
-    const dots = slider.querySelectorAll('.business__slider-dot');
+    const cardBody = slider.closest('.business__card-body');
+    const dots = cardBody.querySelectorAll('.business__slider-dot');
     let current = 0;
     const go = i => {
       current = i;
