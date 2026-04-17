@@ -758,6 +758,34 @@
     object-fit: cover;
     display: block;
   }
+  .business__slider { position: relative; }
+  .business__slider-track {
+    display: flex;
+    overflow: hidden;
+  }
+  .business__slider-track img {
+    width: 100%;
+    flex-shrink: 0;
+    transition: transform .4s ease;
+  }
+  .business__slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .business__slider-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: #ccc;
+    padding: 0;
+    cursor: pointer;
+    transition: background .3s;
+  }
+  .business__slider-dot.is-active {
+    background: var(--color-ink, #312f57);
+  }
   .business__card-text {
     flex: 1;
     min-width: 0;
@@ -1524,7 +1552,16 @@
             </div>
           </div>
           <div class="business__card-body" data-index="2">
-            <div class="business__card-img-sp"><img src="images/ags-02.webp" alt="火坐・森蒸"></div>
+            <div class="business__card-img-sp business__slider">
+              <div class="business__slider-track">
+                <img src="images/ags-02.webp" alt="火坐・森蒸">
+                <img src="images/ags-02b.webp" alt="森蒸（屋内）">
+              </div>
+              <div class="business__slider-dots">
+                <button class="business__slider-dot is-active" aria-label="画像1"></button>
+                <button class="business__slider-dot" aria-label="画像2"></button>
+              </div>
+            </div>
             <div class="business__card-text">
             <div class="business__card-title">火坐<span style="font-size: 0.7em">(屋外)</span>・森蒸<span style="font-size: 0.7em">(屋内)</span></div>
             <div class="business__card-sub">２種類のサウナ</div>
@@ -1844,6 +1881,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+  // Business card image slider
+  document.querySelectorAll('.business__slider').forEach(slider => {
+    const track = slider.querySelector('.business__slider-track');
+    const imgs = track.querySelectorAll('img');
+    const dots = slider.querySelectorAll('.business__slider-dot');
+    let current = 0;
+    const go = i => {
+      current = i;
+      imgs.forEach(img => { img.style.transform = `translateX(-${i * 100}%)`; });
+      dots.forEach((d, idx) => d.classList.toggle('is-active', idx === i));
+    };
+    dots.forEach((dot, idx) => dot.addEventListener('click', () => go(idx)));
+  });
 </script>
 
 </body>
