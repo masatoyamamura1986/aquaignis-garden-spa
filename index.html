@@ -761,38 +761,40 @@
   .business__slider {
     width: clamp(200px, 28vw, 400px);
     flex-shrink: 0;
-  }
-  .business__slider-track {
+    position: relative;
     overflow: hidden;
     border-radius: 4px;
   }
+  .business__slider-track {
+    display: flex;
+    transition: transform .4s ease;
+  }
   .business__slider-track img {
     width: 100%;
+    flex-shrink: 0;
     aspect-ratio: 4 / 3;
     object-fit: cover;
     display: block;
-    transition: margin-left .4s ease;
-  }
-  .business__slider-track img:not(:first-child) {
-    display: none;
   }
   .business__slider-dots {
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: center;
     gap: 8px;
-    margin-top: 8px;
+    z-index: 2;
   }
-  .business__slider-dot {
+  .business__slider-dots span {
     width: 8px; height: 8px;
     border-radius: 50%;
-    border: none;
-    background: #ccc;
-    padding: 0;
+    background: rgba(255,255,255,.5);
     cursor: pointer;
     transition: background .3s;
   }
-  .business__slider-dot.is-active {
-    background: var(--color-ink, #312f57);
+  .business__slider-dots span.active {
+    background: #fff;
   }
   .business__card-text {
     flex: 1;
@@ -1566,10 +1568,7 @@
                 <img src="images/ags-02b.webp" alt="森蒸（屋内）">
                 <img src="images/ags-02.webp" alt="火坐・森蒸">
               </div>
-              <div class="business__slider-dots">
-                <button class="business__slider-dot is-active" aria-label="画像1"></button>
-                <button class="business__slider-dot" aria-label="画像2"></button>
-              </div>
+              <div class="business__slider-dots"></div>
             </div>
             <div class="business__card-text">
             <div class="business__card-title">火坐<span style="font-size: 0.7em">(屋外)</span>・森蒸<span style="font-size: 0.7em">(屋内)</span></div>
@@ -1892,13 +1891,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Business card image slider
   document.querySelectorAll('.business__slider').forEach(slider => {
-    const imgs = slider.querySelectorAll('.business__slider-track img');
-    const dots = slider.querySelectorAll('.business__slider-dot');
-    const go = i => {
-      imgs.forEach((img, idx) => { img.style.display = idx === i ? 'block' : 'none'; });
-      dots.forEach((d, idx) => d.classList.toggle('is-active', idx === i));
-    };
-    dots.forEach((dot, idx) => dot.addEventListener('click', () => go(idx)));
+    const track = slider.querySelector('.business__slider-track');
+    const imgs = track.querySelectorAll('img');
+    if (imgs.length < 2) return;
+    const dotsWrap = slider.querySelector('.business__slider-dots');
+    let idx = 0;
+    imgs.forEach((_, i) => {
+      const d = document.createElement('span');
+      if (i === 0) d.classList.add('active');
+      d.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(d);
+    });
+    function goTo(n) {
+      idx = n;
+      track.style.transform = 'translateX(-' + (n * 100) + '%)';
+      dotsWrap.querySelectorAll('span').forEach((d, i) => d.classList.toggle('active', i === n));
+    }
   });
 });
 </script>
