@@ -8,6 +8,7 @@
 <meta name="description" content="軽井沢駅直結のAQUAIGNIS GARDEN SPA。長野県産の薬草をメインに用いた内湯「森の湯」と露天「霧の湯」、2種類のフィンランド式サウナを楽しめる軽井沢の日帰りスパ。">
 <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
 <link rel="canonical" href="https://aquaignis-karuizawa.jp/">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 
 <!-- OGP -->
 <meta property="og:title" content="AQUAIGNIS GARDEN SPA | 軽井沢駅直結の薬草湯・サウナ・日帰りスパ">
@@ -773,39 +774,20 @@
   .business__slider {
     width: clamp(200px, 28vw, 400px);
     flex-shrink: 0;
-    position: relative;
-    overflow: hidden;
     border-radius: 4px;
+    overflow: hidden;
   }
-  .business__slider-track {
-    display: flex;
-    transition: transform .4s ease;
-  }
-  .business__slider-track img {
+  .business__slider img {
     width: 100%;
-    flex-shrink: 0;
     aspect-ratio: 4 / 3;
     object-fit: cover;
     display: block;
   }
-  .business__slider-dots {
-    position: absolute;
-    bottom: 8px;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    z-index: 2;
-  }
-  .business__slider-dots span {
-    width: 8px; height: 8px;
-    border-radius: 50%;
+  .business__slider .swiper-pagination-bullet {
     background: rgba(255,255,255,.5);
-    cursor: pointer;
-    transition: background .3s;
+    opacity: 1;
   }
-  .business__slider-dots span.active {
+  .business__slider .swiper-pagination-bullet-active {
     background: #fff;
   }
   .business__card-text {
@@ -1575,12 +1557,12 @@
             </div>
           </div>
           <div class="business__card-body" data-index="2">
-            <div class="business__slider">
-              <div class="business__slider-track">
-                <img src="images/ags-02.webp" alt="火坐・森蒸">
-                <img src="images/ags-02b.webp" alt="森蒸（屋内）">
+            <div class="business__slider swiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="images/ags-02.webp" alt="火坐・森蒸"></div>
+                <div class="swiper-slide"><img src="images/ags-02b.webp" alt="森蒸（屋内）"></div>
               </div>
-              <div class="business__slider-dots"></div>
+              <div class="swiper-pagination"></div>
             </div>
             <div class="business__card-text">
             <div class="business__card-title">火坐<span style="font-size: 0.7em">(屋外)</span>・森蒸<span style="font-size: 0.7em">(屋内)</span></div>
@@ -1901,25 +1883,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Business card image slider
-  document.querySelectorAll('.business__slider').forEach(slider => {
-    const track = slider.querySelector('.business__slider-track');
-    const imgs = track.querySelectorAll('img');
-    if (imgs.length < 2) return;
-    const dotsWrap = slider.querySelector('.business__slider-dots');
-    let idx = 0;
-    imgs.forEach((_, i) => {
-      const d = document.createElement('span');
-      if (i === 0) d.classList.add('active');
-      d.addEventListener('click', () => goTo(i));
-      dotsWrap.appendChild(d);
-    });
-    function goTo(n) {
-      idx = n;
-      track.style.transform = 'translateX(-' + (n * 100) + '%)';
-      dotsWrap.querySelectorAll('span').forEach((d, i) => d.classList.toggle('active', i === n));
-    }
-  });
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+new Swiper('.business__slider', {
+  loop: true,
+  autoplay: { delay: 4000, disableOnInteraction: false },
+  pagination: { el: '.business__slider .swiper-pagination', clickable: true },
 });
 </script>
 
